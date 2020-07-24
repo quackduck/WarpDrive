@@ -16,44 +16,44 @@ public class WarpDrive {
 
     private static File data = new File(System.getProperty("user.home") + "/.WarpDriveData");
     private static ArrayList<String> lines = new ArrayList<>();
+    private static boolean dataFileRead = false;
+    private static boolean debug = false;
 
     public static void main(String[] args) {
-//        ArrayList<String> argsList = new ArrayList<>();
-        boolean noMatch = false;
-        for (int i = 0; i < args.length; i++) {
-            if (!args[0].equalsIgnoreCase("--add")) {
-                matchPattern(args[0]);
-            }
-            if (args[i].equalsIgnoreCase("--add")) {
-                if (args.length == (i+1)) {
-                    System.err.println("No argument for option: --add");
-                    System.exit(4);
-                }
-                for (int j = 0; j < args.length - i; j++) {
-                    addPath(args[i + j]);
-                }
-            }
+        if (args.length == 0) {
+            //don't print anything so cd gets no args
+            System.exit(0);
         }
 
+        if (args[0].equalsIgnoreCase("--add")) {
+            if (args.length == 1) {
+                System.err.println("No argument for option: --add");
+                System.exit(1);
+            }
 
-//        addPath("/Users/ishan/Desktop");
-//        if (argsList.contains("--add")) {
-//            addPath(argsList.get(argsList.lastIndexOf("--add") + 1));
-//        }
-//        addPath("/Users/ishan/Desktop/GitHub");
+            for (int j = 1; j < args.length; j++) {
+                addPath(args[j]);
+            }
+            System.out.println("."); // cd .
+        } else {
+            String match = matchPattern(args[0]);
+            addPath(match);
+            System.out.println(match); // cd <match of args[0]>
+        }
     }
 
-    public static void matchPattern(String pattern) {
-
+    public static String matchPattern(String pattern) {
+        return pattern;  // just for now
     }
 
     public static void addPath(String path) {
         File dir = new File(path);
-        //System.out.println(data.getPath());
         if (!dir.exists()) {
             return;
         }
-        readFromDataFile();
+        if (!dataFileRead) {
+            readFromDataFile();
+        }
         try {
             path = dir.getCanonicalPath();
             ArrayList<String> parsed = new ArrayList<>();
@@ -87,22 +87,16 @@ public class WarpDrive {
                 lines.add(dir.getCanonicalPath() + "|1|" + Math.round((double)System.currentTimeMillis()/1000.0));
             }
             writeToDataFile();
-        } catch (Exception ex) {
+        } catch (Exception e) {
             System.err.println("Error while trying to read or write to datafile(~/.WarpDriveData)");
-            ex.printStackTrace();
+            if (debug) {
+                e.printStackTrace();
+            }
             System.exit(2);
         }
 
     }
 
-//    public static String normalizedPath(String path) {
-//        try {
-//            return new File(path).getCanonicalPath();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
     public static boolean pathExists(String path) {
         return new File(path).exists();
     }
@@ -118,7 +112,7 @@ public class WarpDrive {
             } catch (IOException e) {
                 System.err.println("Couldn't make the datafile");
                 e.printStackTrace();
-                System.exit(1);
+                System.exit(3);
             }
         }
         BufferedReader br = new BufferedReader(fr);
@@ -133,9 +127,12 @@ public class WarpDrive {
         }
         catch(IOException e){
             System.err.println("Could not read from datafile or close resources attached");
-            e.printStackTrace();
-            System.exit(2);
+            if (debug) {
+                e.printStackTrace();
+            }
+            System.exit(4);
         }
+        dataFileRead = true;
     }
 
     private static void writeToDataFile() {
@@ -149,7 +146,15 @@ public class WarpDrive {
             out.close();
         } catch (IOException e) {
             System.err.println("Could not write to datafile or close resources attached");
+            if (debug) {
+                e.printStackTrace();
+            }
+            System.exit(4);
         }
 
+    }
+
+    private static double rank() {
+        return 0;
     }
 }
