@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
 * This is a work in progress
 * MacOS will be supported first.
-* Inspired by rupa/z, autojump, zsh-z, and z.lua. Moving to fish meant I couldn't use rupa/z anymore.
+* Inspired by rupa/z, autojump, zsh-z, and z.lua. Moving to fish meant I couldn't use rupa/z anymore.(Edit: there is actually a fish z from jethrokuan/z. I will still continue to work on this)
 * I had to install lua just so I could use a program similar to rupa/z
 */
 public class WarpDrive {
@@ -36,14 +37,62 @@ public class WarpDrive {
             }
             System.out.println("."); // cd .
         } else {
-            String match = matchPattern(args[0]);
+            String match = "";
+            for (int i = 0; i < args.length; i++) {
+                match += args[0];
+            }
+            match = matchPattern(match);
             addPath(match);
             System.out.println(match); // cd <match of args[0]>
         }
     }
 
     public static String matchPattern(String pattern) {
-        return pattern;  // just for now
+        ArrayList<String> finalists = new ArrayList<>();
+        pattern = pattern.trim();
+        String[] parsedPattern = pattern.split(" ");
+        int hits = 0;
+        if (!dataFileRead) {
+            readFromDataFile();
+        }
+        ArrayList<String> parsedDataline = new ArrayList<>();
+        String candidatePath = "";
+        for (String dataline : lines) {
+            hits = 0;
+            parseDataline(parsedDataline, dataline);
+            candidatePath = parsedDataline.get(0);
+            for (int i = 0; i < parsedPattern.length; i++) {
+                if (i == parsedPattern.length - 1) {
+                    String[] parsedCandidatePath = candidatePath.split("/");
+                    if (parsedCandidatePath.length == 0) {
+                        parsedCandidatePath = new String[1];
+                    }
+                    parsedCandidatePath[0] = "/";
+                    if (parsedCandidatePath[parsedCandidatePath.length - 1].contains(parsedPattern[parsedPattern.length - 1])) {
+                        hits++;
+                    }
+                } else if (candidatePath.contains(parsedPattern[i])) {
+                    hits++;
+                }
+            }
+            if (hits == parsedPattern.length) {
+                finalists.add(dataline);
+            }
+        }
+        if (finalists.size() == 1) {
+            return finalists.get(0);
+        } else if (finalists.size() > 1) {
+            finalists.sort(new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    double firstRank = rank(o1);
+                    double secondRank = rank(o2);
+                    return Double.compare(firstRank, secondRank);
+                }
+            });
+            return parseDataline(finalists.get(0), 0);
+        }
+        return pattern;
     }
 
     public static void addPath(String path) {
@@ -60,22 +109,15 @@ public class WarpDrive {
             boolean dirWasFound = false;
             String line;
             for (int i = 0, linesSize = lines.size(); i < linesSize; i++) {
+                parsed.clear();
                 line = lines.get(i);
                 if (line.contains(path)) {
-                    String[] parsedArr = line.split("\\|"); // the two slashes escape the pipe character used as a delimiter
-                    for (int j = 0; j < parsedArr.length; j++) {
-                        parsed.add(parsedArr[j]);
-                    }
-                    while (parsed.size() > 3) {
-                        parsed.remove(0);
-                        parsed.add(0, parsed.get(0) + parsed.get(1));
-                    }
+                    parseDataline(parsed, line);
                     if (parsed.get(0).length() != path.length()) {
-                        parsed.clear();
                         continue;
                     }
-                    parsed.remove(1);
-                    parsed.add(1, Integer.toString(Integer.parseInt(parsedArr[1]) + 1));
+                    parsed.add(1, Integer.toString(Integer.parseInt(parsed.get(1))+1));
+                    parsed.remove(2);
                     line = parsed.get(0) + "|" + parsed.get(1) + "|" + Math.round((double) System.currentTimeMillis() / 1000.0);
                     dirWasFound = true;
                     lines.remove(i);
@@ -118,6 +160,7 @@ public class WarpDrive {
         BufferedReader br = new BufferedReader(fr);
         try {
             while ((line = br.readLine()) != null) {
+                line = line.trim();
                 if (!line.isBlank()) {
                     lines.add(line);
                 }
@@ -154,7 +197,51 @@ public class WarpDrive {
 
     }
 
-    private static double rank() {
+    private static void parseDataline(ArrayList<String> parsed, String line) {
+        String[] parsedArr = line.split("\\|"); // the two slashes escape the pipe character used as a delimiter
+        parsed.clear();
+        for (String s : parsedArr) {
+            parsed.add(s);
+        }
+        while (parsed.size() > 3) {
+            parsed.add(0, parsed.get(0) + parsed.get(1));
+            parsed.remove(1);
+        }
+        //return parsed;
+    }
+    private static ArrayList<String> parseDataline(String line) {
+        ArrayList<String> parsed = new ArrayList<>();
+        String[] parsedArr = line.split("\\|"); // the two slashes escape the pipe character used as a delimiter
+        parsed.clear();
+        for (String s : parsedArr) {
+            parsed.add(s);
+        }
+        while (parsed.size() > 3) {
+            parsed.add(0, parsed.get(0) + parsed.get(1));
+            parsed.remove(1);
+        }
+        return parsed;
+    }
+
+    private static String parseDataline(String line, int i) {
+        ArrayList<String> parsed = new ArrayList<>();
+        String[] parsedArr = line.split("\\|"); // the two slashes escape the pipe character used as a delimiter
+        parsed.clear();
+        for (String s : parsedArr) {
+            parsed.add(s);
+        }
+        while (parsed.size() > 3) {
+            parsed.add(0, parsed.get(0) + parsed.get(1));
+            parsed.remove(1);
+        }
+        return parsed.get(i);
+    }
+
+    private static double rank(String dataline) {
+        ArrayList<String> parsed = new ArrayList<>();
+        parseDataline(parsed, dataline);
+        long frequency = Long.parseLong(parsed.get(0));
+        long time = Math.round((double)System.currentTimeMillis()/(double)1000) - Long.parseLong(parsed.get(2));
         return 0;
     }
 }
