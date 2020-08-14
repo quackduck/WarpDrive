@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.*;
 
 /**
 * This is a work in progress
@@ -15,12 +14,13 @@ import java.util.Comparator;
 */
 public class WarpDrive {
 
-    private static File data = new File(System.getProperty("user.home") + "/.WarpDriveData");
-    private static ArrayList<String> lines = new ArrayList<>();
+    private static final File data = new File(System.getProperty("user.home") + "/.WarpDriveData");
+    private static final ArrayList<String> lines = new ArrayList<>();
     private static boolean dataFileRead = false;
     private static boolean debug = false;
 
     public static void main(String[] args) {
+        //System.err.println(System.currentTimeMillis());
         if (args.length == 0) {
             //don't print anything so cd gets no args
             System.exit(0);
@@ -36,27 +36,51 @@ public class WarpDrive {
                 addPath(args[j]);
             }
             System.out.println("."); // cd .
-        } else {
-            String match = "";
-            for (int i = 0; i < args.length; i++) {
-                match += args[0];
-            }
-            match = matchPattern(match);
-            addPath(match);
-            System.out.println(match); // cd <match of args[0]>
+            return;
         }
+
+        if (args[0].equalsIgnoreCase("--list") || args[0].equalsIgnoreCase("--ls") || args[0].equalsIgnoreCase("-l")) {
+            printDirsAndPoints();
+            System.out.println("."); // cd .
+            //System.err.println(System.currentTimeMillis());
+            return;
+        }
+
+        String match = "";
+        for (String arg : args) {
+            match += arg + " ";
+        }
+        match = matchPattern(match);
+        addPath(match);
+        System.out.println(match); // cd <match of args[0]>
+    }
+
+    public static void printDirsAndPoints() {
+        readFromDataFile();
+        ArrayList<String> parsedDataline = new ArrayList<>();
+        lines.sort((o1, o2) -> {
+            double firstRank = points(o1);
+            double secondRank = points(o2);
+            return Double.compare(secondRank, firstRank);
+        });
+        System.err.println("Points\tDirectory");
+        for (String line: lines) {
+            parseDataline(parsedDataline, line);
+            System.err.println(points(line) + "\t" + parsedDataline.get(0));
+        }
+        writeToDataFile();
     }
 
     public static String matchPattern(String pattern) {
         ArrayList<String> finalists = new ArrayList<>();
         pattern = pattern.trim();
         String[] parsedPattern = pattern.split(" ");
-        int hits = 0;
+        int hits;
         if (!dataFileRead) {
             readFromDataFile();
         }
         ArrayList<String> parsedDataline = new ArrayList<>();
-        String candidatePath = "";
+        String candidatePath;
         for (String dataline : lines) {
             hits = 0;
             parseDataline(parsedDataline, dataline);
@@ -79,17 +103,13 @@ public class WarpDrive {
                 finalists.add(dataline);
             }
         }
-        if (finalists.size() == 1) {
-            return finalists.get(0);
-        } else if (finalists.size() > 1) {
-            finalists.sort(new Comparator<String>() {
-                @Override
-                public int compare(String o1, String o2) {
-                    double firstRank = rank(o1);
-                    double secondRank = rank(o2);
-                    return Double.compare(firstRank, secondRank);
-                }
+        if (finalists.size() >= 1) {
+            finalists.sort((o1, o2) -> {
+                double firstRank = points(o1);
+                double secondRank = points(o2);
+                return (int) (secondRank - firstRank);
             });
+            //System.err.println("finalists: " + finalists);
             return parseDataline(finalists.get(0), 0);
         }
         return pattern;
@@ -97,7 +117,7 @@ public class WarpDrive {
 
     public static void addPath(String path) {
         File dir = new File(path);
-        if (!dir.exists()) {
+        if (!dir.isDirectory()) {
             return;
         }
         if (!dataFileRead) {
@@ -140,15 +160,16 @@ public class WarpDrive {
     }
 
     public static boolean pathExists(String path) {
-        return new File(path).exists();
+        return new File(path).isDirectory();
     }
 
     private static void readFromDataFile() {
         lines.clear();
-        String line = "";
+        String line;
         FileReader fr = null;
         if (data.exists()) {
             try {
+                //noinspection ResultOfMethodCallIgnored
                 data.createNewFile();
                 fr = new FileReader(data);
             } catch (IOException e) {
@@ -161,7 +182,7 @@ public class WarpDrive {
         try {
             while ((line = br.readLine()) != null) {
                 line = line.trim();
-                if (!line.isBlank()) {
+                if (!line.isBlank() && pathExists(parseDataline(line, 0))) {
                     lines.add(line);
                 }
             }
@@ -200,9 +221,7 @@ public class WarpDrive {
     private static void parseDataline(ArrayList<String> parsed, String line) {
         String[] parsedArr = line.split("\\|"); // the two slashes escape the pipe character used as a delimiter
         parsed.clear();
-        for (String s : parsedArr) {
-            parsed.add(s);
-        }
+        Collections.addAll(parsed, parsedArr);
         while (parsed.size() > 3) {
             parsed.add(0, parsed.get(0) + parsed.get(1));
             parsed.remove(1);
@@ -210,12 +229,8 @@ public class WarpDrive {
         //return parsed;
     }
     private static ArrayList<String> parseDataline(String line) {
-        ArrayList<String> parsed = new ArrayList<>();
         String[] parsedArr = line.split("\\|"); // the two slashes escape the pipe character used as a delimiter
-        parsed.clear();
-        for (String s : parsedArr) {
-            parsed.add(s);
-        }
+        ArrayList<String> parsed = new ArrayList<>(Arrays.asList(parsedArr));
         while (parsed.size() > 3) {
             parsed.add(0, parsed.get(0) + parsed.get(1));
             parsed.remove(1);
@@ -224,12 +239,8 @@ public class WarpDrive {
     }
 
     private static String parseDataline(String line, int i) {
-        ArrayList<String> parsed = new ArrayList<>();
         String[] parsedArr = line.split("\\|"); // the two slashes escape the pipe character used as a delimiter
-        parsed.clear();
-        for (String s : parsedArr) {
-            parsed.add(s);
-        }
+        ArrayList<String> parsed = new ArrayList<>(Arrays.asList(parsedArr));
         while (parsed.size() > 3) {
             parsed.add(0, parsed.get(0) + parsed.get(1));
             parsed.remove(1);
@@ -237,11 +248,27 @@ public class WarpDrive {
         return parsed.get(i);
     }
 
-    private static double rank(String dataline) {
+    private static double points(String dataline) {
         ArrayList<String> parsed = new ArrayList<>();
         parseDataline(parsed, dataline);
-        long frequency = Long.parseLong(parsed.get(0));
-        long time = Math.round((double)System.currentTimeMillis()/(double)1000) - Long.parseLong(parsed.get(2));
-        return 0;
+        int frequency = Integer.parseInt(parsed.get(1));
+        int time = (int)(Math.round((double)System.currentTimeMillis()/(double)1000) - Long.parseLong(parsed.get(2)));
+        double result;
+        if (time <= 60) { // last minute
+            result = frequency * 16;
+        } else if (time <= 1800) { // last half hour
+            result = frequency * 8;
+        } else if (time <= 3600) { // last hour
+            result = frequency * 4;
+        } else if (time <= (3600*12)) { // last half day
+            result = frequency * 2;
+        } else if (time <= (3600*24)*7) { // last week
+            result = frequency;
+        } else if (time <= (3600*24)*7*2) {
+            result = frequency * 0.5;
+        } else {
+            result = frequency * 0.25;
+        }
+        return (double)Math.round(result*100)/(double)100;
     }
 }
