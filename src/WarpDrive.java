@@ -167,7 +167,7 @@ public class WarpDrive {
         lines.clear();
         String line;
         FileReader fr = null;
-        if (data.exists()) {
+        if (!data.exists()) {
             try {
                 //noinspection ResultOfMethodCallIgnored
                 data.createNewFile();
