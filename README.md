@@ -33,7 +33,7 @@ If you had visited `someDir` before, you could go there by using:
  
  `fish` is currently supported.
  
- You need to have `java` installed for WarpDrive to work.
+ You need to have `java` installed for WarpDrive to work. Use `brew cask install java` if you have Homebrew installed
  
  ### Fish Install
  

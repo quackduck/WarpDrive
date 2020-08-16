@@ -1,9 +1,4 @@
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.File;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -171,12 +166,15 @@ public class WarpDrive {
             try {
                 //noinspection ResultOfMethodCallIgnored
                 data.createNewFile();
-                fr = new FileReader(data);
             } catch (IOException e) {
                 System.err.println("Couldn't make the datafile");
                 e.printStackTrace();
                 System.exit(3);
             }
+        }
+        try {
+            fr = new FileReader(data);
+        } catch (FileNotFoundException ignored) {
         }
         BufferedReader br = new BufferedReader(fr);
         try {
