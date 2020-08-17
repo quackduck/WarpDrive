@@ -37,9 +37,9 @@ If you had visited `someDir` before, you could go there by using:
  
  ### Fish Install
  
- WarpDrive can be installed by
+ WarpDrive can be **installed or updated** by
  
- Adding this:
+Having this:
  
  ```fish
  if test ! "$wd_last_added_dir"
@@ -50,12 +50,12 @@ If you had visited `someDir` before, you could go there by using:
  end
  set -g wd_last_added_dir (pwd)
  ```
-to your `fish_prompt` function and running these commands in a `fish` shell:
+in your `fish_prompt` function and running these commands in a `fish` shell:
 
 ```fish
-curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/wd.fish > ~/.config/fish/functions/wd.fish
-curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/src/WarpDrive.java > ~/WarpDrive.java
-cd ~ && javac WarpDrive.java && rm WarpDrive.java && cd -
+curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/wd.fish > ~/.config/fish/functions/wd.fish # downloads the newest fish function file
+curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/src/WarpDrive.java > ~/WarpDrive.java # downloads the newest java source code file
+cd ~ && javac WarpDrive.java && rm WarpDrive.java && cd - # compiles the java file and then deletes it
 ```
  
  ## Caveats
