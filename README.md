@@ -60,7 +60,7 @@ cd ~ && javac WarpDrive.java && rm WarpDrive.java && cd - # compiles the java fi
 
 ## Compatibility
 
-The datafile format is the same as rupa/z, jethrokuan/z and z.lua
+The datafile format is the same as rupa/z, jethrokuan/z, zsh-z and z.lua
 
 ## Known Issues
 
