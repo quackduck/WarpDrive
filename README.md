@@ -8,26 +8,62 @@ You can use WarpDrive like this:
 ```sh
 wd someDir
 ```
-If you had visited `someDir` before, it'll take you there. Otherwise, it will take you to a directory of that name in the working directory.
+If you had visited `someDir` before (and thus `someDir` is in the datafile), it'll take you there. Otherwise, it will take you to a directory of that name in the working directory (which is standard `cd` behavior).
 
-If you had visited `someDir` before, you could go there by using:
+You could also do the same thing with just parts of the full path:
  ```sh
  wd s
  ```
  or 
  ```sh
- wd some
+ wd Dir
  ```
+ ### Options
+ Currently, WarpDrive has two options:
  
- ### More examples:
+ **Option -a or --add**
+This option adds paths. Paths are automatically added when you visit them.
+
+```sh
+wd -a /Users /usr/local/bin
+```
+**Option -l, --ls or --list**
+Shows tracked directories and their points, sorted by most.
+```sh
+wd -l
+```
+Sample output:
+```
+Points Directory
+38.0	/Users/ishan/Desktop/GitHub/WarpDrive
+36.0	/Users/ishan/Desktop/tests/foo
+6.0	/Users/ishan/.config/fish
+5.0	/Users/ishan/.config
+3.0	/Users/ishan/.config/fish/functions
+1.0	/usr/libexec
+1.0	/Library/Java/JavaVirtualMachines/openjdk-14.0.2.jdk/Contents/Home
+1.0	/Library/Java/JavaVirtualMachines/openjdk-14.0.2.jdk/Contents/Home/bin
+1.0	/
+1.0	/Users/ishan/Downloads
+1.0	/Users/ishan
+1.0	/Users/ishan/.config/fish/conf.d
+0.5	/Users/ishan/Desktop
+0.5	/Users/ishan/Desktop/tests
+```
  
+ ### Different Arguments
+ 
+ WarpDrive recognizes seperate arguments as matching different directories in a path. They do not need to be in order.
+ 
+ Both
  ```sh
  wd parentDir childDir
  ```
  or 
  ```sh
- wd p c
+ wd child par
  ```
+ will have the same result
  
  ## Installing
  
