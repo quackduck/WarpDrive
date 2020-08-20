@@ -57,13 +57,15 @@ Points Directory
  
  Both
  ```sh
- wd parentDir childDir
+ wd grandParentDir parentDir childDir
  ```
  or 
  ```sh
- wd child par
+ wd parent grand child
  ```
- will have the same result
+ will have the same result. 
+ 
+ Note! WarpDrive will *always* take you to a directory matching the last pattern. For more info on what this means, check the second Caveat.
  
  ## Installing
  
