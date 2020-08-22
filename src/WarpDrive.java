@@ -21,7 +21,7 @@ public class WarpDrive {
             System.exit(0);
         }
 
-        if (args[0].equalsIgnoreCase("--add")) {
+        if (args[0].equalsIgnoreCase("--add") || args[0].equalsIgnoreCase("-a")) {
             if (args.length == 1) {
                 System.err.println("No argument for option: --add");
                 System.exit(1);
