@@ -2,13 +2,7 @@
 
 WarpDrive is a replacement for `cd` (However it does use `cd` to work). It tracks your visited directories and uses a "frecency" algorithm (combining frequency and recency) to determine which directory to warp to. 
 
-Example:
-```sh
-ishan@mac [~] $  wd Warp
-ishan@mac [~/Desktop/GitHub/WarpDrive] $  ls
-LICENSE    README.md  out/       src/       wd.fish
-ishan@mac [~/Desktop/GitHub/WarpDrive] $
-```
+![Example Usage](example.png)
 
 ## Usage
 
