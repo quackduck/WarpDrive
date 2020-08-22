@@ -108,8 +108,10 @@ This is because the JVM takes a lot of time to start up. The application itself 
  
   _WarpDrive stores data at_ `~/.WarpDriveData`.
  
- _WarpDrive will always take you to a directory that matches the last pattern given._ In other words, if the datafile contains two directories: `/foo/bar` and `/bar/foo` and you use the command `wd f` it will take you to `/bar/foo`
+ _WarpDrive will always take you to a directory that matches the last pattern given._ In other words, if the datafile contains two directories: `/foo/bar` and `/bar/foo` and you use the command `wd f` it will take you to `/bar/foo`.
  
- _WarpDrive is case sensitive. `wd Bar` is not the same as `wd bar`_
+ _WarpDrive is case sensitive. `wd Bar` is not the same as `wd bar`._
+
+_Just `wd` takes you to the home directory._
  
  ### Suggestions are welcome, file those or issues [here](https://github.com/quackduck/WarpDrive/issues)
