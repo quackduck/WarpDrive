@@ -65,7 +65,7 @@ Points Directory
  ```
  will have the same result. 
  
- Note! WarpDrive will *always* take you to a directory matching the last pattern. For more info on what this means, check the second Caveat.
+ **Note! WarpDrive will *always* take you to a directory matching the last pattern. For more info on what this means, check the second Caveat.**
  
  ## Installing
  
