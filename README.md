@@ -10,7 +10,7 @@ You can use WarpDrive like this:
 ```sh
 wd someDir
 ```
-If you had visited `someDir` before (and thus `someDir` is in the datafile), it'll take you there. Otherwise, it will take you to a directory of that name in the working directory (which is standard `cd` behavior).
+If you had visited `someDir` before (and thus `someDir` is in the datafile), it'll take you there. Otherwise, it'll just pass on the aguments to `cd` (which means that both relative and absolute paths would work).
 
 You could also do the same thing with just parts of the full path:
  ```sh
@@ -24,12 +24,14 @@ You could also do the same thing with just parts of the full path:
  Currently, WarpDrive has two options:
  
  **Option -a or --add**
+
 This option adds paths. Paths are automatically added when you visit them.
 
 ```sh
 wd -a /Users /usr/local/bin
 ```
 **Option -l, --ls or --list**
+
 Shows tracked directories and their points, sorted by most.
 ```sh
 wd -l
@@ -37,7 +39,7 @@ wd -l
 Sample output:
 ```
 Points Directory
-38.0	/Users/ishan/Desktop/GitHub/WarpDrive
+150.0	/Users/ishan/Desktop/GitHub/WarpDrive
 36.0	/Users/ishan/Desktop/tests/foo
 6.0	/Users/ishan/.config/fish
 5.0	/Users/ishan/.config
