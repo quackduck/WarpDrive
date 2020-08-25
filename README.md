@@ -10,7 +10,7 @@ You can use WarpDrive like this:
 ```sh
 wd someDir
 ```
-If you had visited `someDir` before (and thus `someDir` is in the datafile), it'll take you there. Otherwise, it'll just pass on the aguments to `cd` (which means that both relative and absolute paths would work).
+If you had visited `someDir` before (and thus `someDir` is in the datafile), it'll take you there. Otherwise, it'll just pass on the aguments to `cd` (which means that both relative and absolute paths work).
 
 You could also do the same thing with just parts of the full path:
  ```sh
