@@ -16,7 +16,6 @@ public class WarpDrive {
     private static boolean debug = false;
 
     public static void main(String[] args) {
-        System.err.println(parseDataline("lol|lol|2|15", 0));
         if (args.length == 0) {
             // don't print anything so cd gets no args
             System.exit(0);
