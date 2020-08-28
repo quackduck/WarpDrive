@@ -106,7 +106,7 @@ The datafile format is the same as rupa/z, jethrokuan/z, zsh-z and z.lua
 
 ## Known Issues
 
-WarpDrive is slow, quite ironically, taking ~160ms on average (This could be different for you. Do inform me about WarpDrive's performance)
+WarpDrive is a bit slow, compared to similar native shell scripts, taking ~160ms on average (This could be different for you. Do inform me about WarpDrive's performance)
 This is because the JVM takes a lot of time to start up. The application itself takes 30ms.
  ## Caveats
  
