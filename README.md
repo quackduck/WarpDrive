@@ -21,11 +21,15 @@ You could also do the same thing with just parts of the full path:
  wd Dir
  ```
  ### Options
- Currently, WarpDrive has two options:
+ Currently, WarpDrive has three options:
+ 
+ **Option --update**
+ 
+Updates WarpDrive to the latest commit
  
  **Option -a or --add**
 
-This option adds paths. Paths are automatically added when you visit them.
+Adds paths. Paths are automatically added when you visit them.
 
 ```sh
 wd -a /Users /usr/local/bin
@@ -77,11 +81,11 @@ Points Directory
  
  You need to have `java` installed for WarpDrive to work. Use `brew cask install java` if you have Homebrew installed
  
- ### Fish Install or Update
+ ### Fish Install
  
- WarpDrive can be **installed or updated** by
+ WarpDrive can be installed by:
  
-Having this:
+Adding this:
  
  ```fish
  if test ! "$wd_last_added_dir"
@@ -92,7 +96,7 @@ Having this:
  end
  set -g wd_last_added_dir (pwd)
  ```
-in your `fish_prompt` function and running this command in a `fish` shell:
+somewhere in your `fish_prompt` function and running this command in a `fish` shell:
 
 ```fish
 curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/install.fish | fish
