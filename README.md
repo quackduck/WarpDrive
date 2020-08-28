@@ -92,12 +92,10 @@ Having this:
  end
  set -g wd_last_added_dir (pwd)
  ```
-in your `fish_prompt` function and running these commands in a `fish` shell:
+in your `fish_prompt` function and running this command in a `fish` shell:
 
 ```fish
-curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/wd.fish > ~/.config/fish/functions/wd.fish # downloads the newest fish function file
-curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/src/WarpDrive.java > ~/WarpDrive.java # downloads the newest java source code file
-cd ~ && javac WarpDrive.java && rm WarpDrive.java && cd - # compiles the java file and then deletes it
+curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/install.fish | fish
 ```
 
 ## Compatibility
