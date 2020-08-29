@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class WarpDrive {
 
-    // TODO: Implement --help
+    // TODO: Think about what to do now haha
 
     private static final File data = new File(System.getProperty("user.home") + "/.WarpDriveData");
     private static final ArrayList<String> lines = new ArrayList<>();
@@ -23,9 +23,27 @@ public class WarpDrive {
             System.exit(0);
         }
 
+        if (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h")) {
+            String n = System.lineSeparator();
+            System.err.println("WarpDrive - Warp across directories" + n +
+                    "Usage: wd [--update] [--help | -h] [--add <path> ...] [--list | --ls | -l] " + n +
+                    "   Examples:" + n +
+                    "      wd /" + n +
+                    "      wd dirInWorkingDir" + n +
+                    "      wd dirYouHaveBeenToBefore" + n +
+                    "      wd /Absolute/Path/To/Somewhere" + n +
+                    "      wd --add willBeAdded" + n +
+                    "      wd --list # lists all tracked dirs" + n +
+                    "      wd --update # update to latest commit" + n +
+                    "Refer to https://github.com/quackduck/WarpDrive for more information");
+            System.out.println(".");
+            return;
+        }
+
         if (args[0].equalsIgnoreCase("--add") || args[0].equalsIgnoreCase("-a")) {
             if (args.length == 1) {
                 System.err.println("No argument for option: --add");
+                System.out.println("."); // cd .
                 System.exit(1);
             }
 

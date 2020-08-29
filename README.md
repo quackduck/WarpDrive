@@ -21,7 +21,25 @@ You could also do the same thing with just parts of the full path:
  wd Dir
  ```
  ### Options
- Currently, WarpDrive has three options:
+ Currently, WarpDrive has four options:
+ 
+ **Option --help or -h**
+
+Prints a small help message:
+
+```
+ WarpDrive - Warp across directories
+ Usage: wd [--update] [--help | -h] [--add <path> ...] [--list | --ls | -l]
+    Examples:
+       wd /
+       wd dirInWorkingDir
+       wd dirYouHaveBeenToBefore
+       wd /Absolute/Path/To/Somewhere
+       wd --add willBeAdded
+       wd --list # lists all tracked dirs
+       wd --update # update to latest commit
+ Refer to https://github.com/quackduck/WarpDrive for more information
+```
  
  **Option --update**
  
@@ -110,14 +128,19 @@ The datafile format is the same as rupa/z, jethrokuan/z, zsh-z and z.lua
 
 WarpDrive is a bit slow, compared to similar native shell scripts, taking ~160ms on average (This could be different for you. Do inform me about WarpDrive's performance)
 This is because the JVM takes a lot of time to start up. The application itself takes 30ms.
+ 
  ## Caveats
  
   _WarpDrive stores data at_ `~/.WarpDriveData`.
  
  _WarpDrive will always take you to a directory that matches the last pattern given._ In other words, if the datafile contains two directories: `/foo/bar` and `/bar/foo` and you use the command `wd f` it will take you to `/bar/foo`.
  
- _WarpDrive is case sensitive. `wd Bar` is not the same as `wd bar`._
+ _WarpDrive is case-sensitive. `wd Bar` is not the same as `wd bar`._
 
 _Just `wd` takes you to the home directory._
+
+_No options can be grouped together. `wd -hl --add /` won't work_
+
+_If any options are specified, you stay in the same directory even if you specified a directory. `wd -l someDir` won't work_
  
  ### Suggestions are welcome, file those or issues [here](https://github.com/quackduck/WarpDrive/issues)
