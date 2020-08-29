@@ -1,6 +1,6 @@
 function wd --description 'Warp across directories'
   if test ! "$wd_source_containing_dir"
-    set -l wd_source_containing_dir ~
+    set wd_source_containing_dir ~
   end
   if test "$argv[1]" = "--update"
     set_color bryellow; echo "Updating WarpDrive"; set_color normal;
