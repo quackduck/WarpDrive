@@ -21,7 +21,11 @@ You could also do the same thing with just parts of the full path:
  wd Dir
  ```
  ### Options
- Currently, WarpDrive has four options:
+ Currently, WarpDrive has five options:
+ 
+ **Option -s**
+ 
+ Runs `ls` after warping to a directory.
  
  **Option --help or -h**
 
