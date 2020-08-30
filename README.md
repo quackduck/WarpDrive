@@ -143,7 +143,7 @@ This is because the JVM takes a lot of time to start up. The application itself 
 
 _Just `wd` takes you to the home directory._
 
-_No options except `-s` can be grouped together. `wd -hl --add /` won't work but `wd -s ~`_
+_No options except `-s` can be grouped together. `wd -hl --add /` won't work but `wd -s ~` will_
 
 _If any options except -s are specified, you stay in the same directory even if you specified a directory. `wd -l someDir` won't work_
  
