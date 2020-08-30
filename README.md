@@ -130,7 +130,7 @@ The datafile format is the same as rupa/z, jethrokuan/z, zsh-z and z.lua
 
 ## Known Issues
 
-WarpDrive is a bit slow, compared to similar native shell scripts, taking ~160ms on average (This could be different for you. Do inform me about WarpDrive's performance)
+WarpDrive is a bit slow, compared to native shell scripts, taking ~150ms on average (tested using [Hyperfine](https://github.com/sharkdp/hyperfine)) for most commands (This could be different for you. Do inform me about WarpDrive's performance or leave a review at <igoel.mail@gmail.com>)
 This is because the JVM takes a lot of time to start up. The application itself takes 30ms.
  
  ## Caveats
@@ -147,4 +147,4 @@ _No options can be grouped together. `wd -hl --add /` won't work_
 
 _If any options are specified, you stay in the same directory even if you specified a directory. `wd -l someDir` won't work_
  
- ### Suggestions are welcome, file those or issues [here](https://github.com/quackduck/WarpDrive/issues)
+ ### Suggestions are welcome, file those or issues [here](https://github.com/quackduck/WarpDrive/issues).
