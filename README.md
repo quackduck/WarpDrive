@@ -83,7 +83,7 @@ wd --list
 ```
 Sample output:
 ```
-Points Directory
+Points	Directory
 150.0	/Users/ishan/Desktop/GitHub/WarpDrive
 36.0	/Users/ishan/Desktop/tests/foo
 6.0	/Users/ishan/.config/fish
