@@ -26,15 +26,18 @@ public class WarpDrive {
         if (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h")) {
             String n = System.lineSeparator();
             System.err.println("WarpDrive - Warp across directories" + n +
-                    "Usage: wd [--update] [--help | -h] [--add <path> ...] [--list | --ls | -l] " + n +
-                    "   Examples:" + n +
+                    "Usage: wd {[ --update | --help/-h | --add/-a <path> ... | --remove/--rm/-r <path> ... | --list/--ls/-l] | [-s] someDir }" + n +
+                    "Examples:" + n +
                     "      wd /" + n +
                     "      wd dirInWorkingDir" + n +
-                    "      wd dirYouHaveBeenToBefore" + n +
+                    "      wd anyDirYouHaveBeenToBefore" + n +
                     "      wd /Absolute/Path/To/Somewhere" + n +
-                    "      wd --add willBeAdded" + n +
+                    "      wd -s runLsAfterWarping" + n +
+                    "      wd --add dirThatWillBeAdded" + n +
+                    "      wd --remove dirThatWillBeRemoved" + n +
                     "      wd --list # lists all tracked dirs" + n +
                     "      wd --update # update to latest commit" + n +
+                    "-s is accepted silently even if you use any other option (this is so that you can make an alias with -s)" + n +
                     "Refer to https://github.com/quackduck/WarpDrive for more information");
             System.out.println(".");
             return;
@@ -49,6 +52,22 @@ public class WarpDrive {
 
             for (int j = 1; j < args.length; j++) {
                 addPath(args[j]);
+            }
+            System.out.println("."); // cd .
+            return;
+        }
+
+        if (args[0].equalsIgnoreCase("--remove")
+                || args[0].equalsIgnoreCase("--rm")
+                || args[0].equalsIgnoreCase("-r")) {
+            if (args.length == 1) {
+                System.err.println("No argument for option: --remove");
+                System.out.println("."); // cd .
+                System.exit(1);
+            }
+
+            for (int j = 1; j < args.length; j++) {
+                removePath(args[j]);
             }
             System.out.println("."); // cd .
             return;
@@ -70,6 +89,41 @@ public class WarpDrive {
         match = matchPattern(match);
         addPath(match);
         System.out.println(match); // cd <match of args[0]>
+    }
+
+    public static void removePath(String path) {
+        File dir = new File(path);
+        if (!dataFileRead) {
+            readFromDataFile();
+        }
+        if (!dir.exists()) {
+            return;
+        }
+        ArrayList<String> parsed = new ArrayList<>();
+        try {
+            path = dir.getCanonicalPath();
+            String line;
+            for (int i = 0, linesSize = lines.size(); i < linesSize; i++) {
+                parsed.clear();
+                line = lines.get(i);
+                if (line.contains(path)) {
+                    parseDataline(parsed, line);
+                    if (parsed.get(0).length() != path.length()) {
+                        continue;
+                    }
+                    lines.remove(i);
+                    break;
+                }
+            }
+            writeToDataFile();
+        } catch (Exception e) {
+            System.err.println("Error while trying to read or write to datafile(~/.WarpDriveData)");
+            if (debug) {
+                e.printStackTrace();
+            }
+            System.exit(2);
+        }
+
     }
 
     public static void printDirsAndPoints() {
@@ -136,6 +190,13 @@ public class WarpDrive {
         File dir = new File(path);
         if (!dir.isDirectory()) {
             return;
+        }
+        try {
+            if (dir.getCanonicalPath().equals(System.getProperty("user.home"))) {
+                return;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         if (!dataFileRead) {
             readFromDataFile();

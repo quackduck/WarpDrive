@@ -20,17 +20,24 @@ You could also do the same thing with just parts of the full path:
  ```sh
  wd Dir
  ```
- ### Options
- Currently, WarpDrive has five options:
+ ### Options 
+ Currently, WarpDrive has six options:
  
  **Option -s**
  
  Runs `ls` after warping to a directory.
+ ```
+  wd --help
+ ```
  
  **Option --help or -h**
 
 Prints a small help message:
 
+```
+ wd --help
+```
+Output:
 ```
  WarpDrive - Warp across directories
  Usage: wd [--update] [--help | -h] [--add <path> ...] [--list | --ls | -l]
@@ -47,20 +54,32 @@ Prints a small help message:
  
  **Option --update**
  
-Updates WarpDrive to the latest commit
+Updates WarpDrive to the latest commit.
+
+```
+wd --update
+```
  
  **Option -a or --add**
 
 Adds paths. Paths are automatically added when you visit them.
 
 ```sh
-wd -a /Users /usr/local/bin
+wd --add /Users /usr/local/bin
+```
+
+ **Option -r, --rm or --remove**
+
+Removes paths. This does not "decrement" frequency. It completely deletes a path, so it is no longer tracked (Unless, of course, you visit it again).
+
+```sh
+wd --remove /Users /usr/local/bin
 ```
 **Option -l, --ls or --list**
 
 Shows tracked directories and their points, sorted by most.
 ```sh
-wd -l
+wd --list
 ```
 Sample output:
 ```
@@ -80,6 +99,8 @@ Points Directory
 0.5	/Users/ishan/Desktop
 0.5	/Users/ishan/Desktop/tests
 ```
+
+ _Even though most of these "options" would be better implemented as standalone actions, they are implemented as regular options because they have the advantage of not being like filenames_
  
  ### Different Arguments
  
