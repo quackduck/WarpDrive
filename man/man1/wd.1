@@ -1,0 +1,71 @@
+.TH wd "1" "September 2020" "User Commands"
+.SH NAME
+WarpDrive \- Warp across directories
+.SH SYNOPSIS
+.B wd
+[\fI\<option>\fR] [\fI\<pattern>\fR ...]
+.SH DESCRIPTION
+WarpDrive is a replacement for \fBcd(1)\fR. It tracks your visited directories and uses a "frecency" algorithm (combining frequency and recency) to determine which directory to warp to.
+.P
+You can specify just a part of the full path. When multiple patterns are given, they are also taken to be part of the full path. Absolute paths and relative paths can also be used. To go to the home directory don't specify any arguments, i.e. use just `\fBwd\fR` (like \fBcd(1)\fR)
+.SS "Note:"
+WarpDrive is case sensitive
+.P
+When specifying multiple patterns, order doesn't matter except for the last pattern given
+i.e. WarpDrive will always take you to a directory whose name matches the last pattern
+.P
+If <pattern> is specified after an option, <pattern> will be ignored unless the option is \-s
+.P
+Option \-s is accepted silently even if you use any other option (this is so that you can make an alias with \-s)
+.SH OPTIONS
+.TP
+\fB\-s\fR
+Run ls after warping to a directory
+.TP
+\fB\-\-add\fR, \fB\-a\fR <path> ...
+Add paths to be tracked. Paths are automatically added when visited
+.TP
+\fB\-\-remove\fR, \fB\-\-rm\fR, \fB\-r\fR <path> ...
+Remove paths so they are no longer tracked
+.TP
+\fB\-\-list\fR, \fB\-\-ls\fR, \fB\-l\fR
+List tracked paths and their points, sorted by most
+.TP
+\fB\-\-update\fR
+Update WarpDrive to the latest commit
+.TP
+\fB\-\-help\fR, \fB\-h\fR
+Print a small help message
+.SH EXAMPLES
+.P
+wd
+.P
+wd /
+.P
+wd dir-in-working-dir
+.P
+wd any-dir-you-have-been-to-before
+.P
+wd grand-parent-dir parent-dir child-dir
+.P
+wd parent-dir grand-parent-dir child-dir
+.P
+wd a-part-of-the-full-name-of-some-dir
+.P
+wd /absolute/path/to/somewhere
+.P
+wd \-s run-ls-after-warping
+.P
+wd \-\-add dir-that-will-be-added
+.P
+wd \-\-remove dir-that-will-be-removed
+.P
+wd \-\-list
+.P
+wd \-\-update
+.P
+wd \-\-help
+.SH "SEE ALSO"
+\fBcd(1)\fR
+.P
+Refer to https://github.com/quackduck/WarpDrive for more information
