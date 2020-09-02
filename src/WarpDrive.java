@@ -37,23 +37,23 @@ public class WarpDrive {
                     "Examples:" + n +
                     "   wd" + n +
                     "   wd /" + n +
-                    "   wd dirInWorkingDir" + n +
-                    "   wd anyDirYouHaveBeenToBefore" + n +
-                    "   wd grandParentDir parentDir childDir" + n +
-                    "   wd parentDir grandGrandParentDir childDir" + n +
-                    "   wd partOfTheFullName" + n +
-                    "   wd /Absolute/Path/To/Somewhere" + n +
-                    "   wd -s runLsAfterWarping" + n +
-                    "   wd --add dirThatWillBeAdded" + n +
-                    "   wd --remove dirThatWillBeRemoved" + n +
+                    "   wd dir-in-pwd" + n +
+                    "   wd dir-that-was-visited-before" + n +
+                    "   wd grand-parent-dir parent-dir child-dir" + n +
+                    "   wd parent-dir grand-parent-dir child-dir" + n +
+                    "   wd a-part-of-the-full-name-of-some-dir" + n +
+                    "   wd /absolute/path/to/somewhere" + n +
+                    "   wd -s run-ls-after-warping" + n +
+                    "   wd --add dir-to-add" + n +
+                    "   wd --remove dir-to-remove" + n +
                     "   wd --list" + n +
                     "   wd --update" + n +
                     "   wd --help" + n +
                     "Note:" + n +
-                    "   To go to the home directory don't specify any arguments, i.e. use just `wd` (like cd)" + n + n +
+                    "   To go to the home directory don't specify any arguments, i.e. use just `wd` (like cd)" + n +
                     "   When specifying multiple patterns, order doesn't matter except for the last pattern given" + n +
-                    "      i.e. WarpDrive will always take you to a directory whose name matches the last pattern" + n + n +
-                    "   If <pattern> is specified after an option, <pattern> will be ignored unless the option is -s" + n + n +
+                    "      i.e. WarpDrive will always take you to a directory whose name matches the last pattern" + n +
+                    "   If <pattern> is specified after an option, <pattern> will be ignored unless the option is -s" + n +
                     "   -s is accepted silently even if you use any other option (this is so that you can make an alias with -s)" + n + n +
                     "Refer to https://github.com/quackduck/WarpDrive for more information");
             System.out.println(".");

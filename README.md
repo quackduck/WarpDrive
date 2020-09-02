@@ -1,6 +1,6 @@
 # WarpDrive - Warp across directories
 
-WarpDrive is a replacement for `cd` (However it does use `cd` to work). It tracks your visited directories and uses a "frecency" algorithm (combining frequency and recency) to determine which directory to warp to. 
+WarpDrive is a replacement for `cd` (However it does use `cd` to work). It tracks your visited directories and uses a "frecency" algorithm (combining frequency and recency) to determine which directory to warp to.
 
 ![Example Usage](example.png)
 
@@ -32,29 +32,50 @@ You could also do the same thing with just parts of the full path:
  
  **Option --help or -h**
 
-Prints a small help message:
+Prints a small help message (run `man wd` for more help):
 
 ```
  wd --help
 ```
 Output:
 ```
- WarpDrive - Warp across directories
- Usage: wd [--update] [--help | -h] [--add <path> ...] [--list | --ls | -l]
-    Examples:
-       wd /
-       wd dirInWorkingDir
-       wd dirYouHaveBeenToBefore
-       wd /Absolute/Path/To/Somewhere
-       wd --add willBeAdded
-       wd --list # lists all tracked dirs
-       wd --update # update to latest commit
- Refer to https://github.com/quackduck/WarpDrive for more information
+WarpDrive - Warp across directories
+Usage: wd [<option>] [<pattern> ...]
+Options:
+   -s                              Run ls after warping to a directory
+   --add, -a <path> ...            Add paths to be tracked. Paths are automatically added when visited
+   --remove, --rm, -r <path> ...   Remove paths so they are no longer tracked
+   --list, --ls, -l                List tracked paths and their points, sorted by most
+   --update                        Update WarpDrive to the latest commit
+   --help, -h                      Print this help message
+Examples:
+   wd
+   wd /
+   wd dir-in-pwd
+   wd dir-that-was-visited-before
+   wd grand-parent-dir parent-dir child-dir
+   wd parent-dir grand-parent-dir child-dir
+   wd a-part-of-the-full-name-of-some-dir
+   wd /absolute/path/to/somewhere
+   wd -s run-ls-after-warping
+   wd --add dir-to-add
+   wd --remove dir-to-remove
+   wd --list
+   wd --update
+   wd --help
+Note:
+   To go to the home directory don't specify any arguments, i.e. use just `wd` (like cd)
+   When specifying multiple patterns, order doesn't matter except for the last pattern given
+      i.e. WarpDrive will always take you to a directory whose name matches the last pattern
+   If <pattern> is specified after an option, <pattern> will be ignored unless the option is -s
+   -s is accepted silently even if you use any other option (this is so that you can make an alias with -s)
+
+Refer to https://github.com/quackduck/WarpDrive for more information
 ```
  
  **Option --update**
  
-Updates WarpDrive to the latest commit.
+Updates WarpDrive to the latest commit. It is recommended to update with `wd --update` to ensure you have the latest WarpDrive.
 
 ```
 wd --update
@@ -118,7 +139,7 @@ Points	Directory
  
  **Note! WarpDrive will *always* take you to a directory matching the last pattern. For more info on what this means, check the second Caveat.**
  
- ## Installing or Updating
+ ## Installing
  
  `fish` is currently supported.
  
