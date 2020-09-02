@@ -6,16 +6,16 @@ WarpDrive \- Warp across directories
 [\fI\<option>\fR] [\fI\<pattern>\fR ...]
 .SH DESCRIPTION
 WarpDrive is a replacement for \fBcd(1)\fR. It tracks your visited directories and uses a "frecency" algorithm (combining frequency and recency) to determine which directory to warp to.
-.P
+.sp 0
 You can specify just a part of the full path. When multiple patterns are given, they are also taken to be part of the full path. Absolute paths and relative paths can also be used. To go to the home directory don't specify any arguments, i.e. use just `\fBwd\fR` (like \fBcd(1)\fR)
 .SS "Note:"
 WarpDrive is case sensitive
-.P
+.sp 0
 When specifying multiple patterns, order doesn't matter except for the last pattern given
 i.e. WarpDrive will always take you to a directory whose name matches the last pattern
-.P
+.sp 0
 If <pattern> is specified after an option, <pattern> will be ignored unless the option is \-s
-.P
+.sp 0
 Option \-s is accepted silently even if you use any other option (this is so that you can make an alias with \-s)
 .SH OPTIONS
 .TP
@@ -37,33 +37,33 @@ Update WarpDrive to the latest commit
 \fB\-\-help\fR, \fB\-h\fR
 Print a small help message
 .SH EXAMPLES
-.P
+.sp 0
 wd
-.P
+.sp 0
 wd /
-.P
+.sp 0
 wd dir-in-pwd
-.P
+.sp 0
 wd dir-that-was-visited-before
-.P
+.sp 0
 wd grand-parent-dir parent-dir child-dir
-.P
+.sp 0
 wd parent-dir grand-parent-dir child-dir
-.P
+.sp 0
 wd a-part-of-the-full-name-of-some-dir
-.P
+.sp 0
 wd /absolute/path/to/somewhere
-.P
+.sp 0
 wd \-s ls-after-warping
-.P
+.sp 0
 wd \-\-add dir-to-add
-.P
+.sp 0
 wd \-\-remove dir-to-remove
-.P
+.sp 0
 wd \-\-list
-.P
+.sp 0
 wd \-\-update
-.P
+.sp 0
 wd \-\-help
 .SH "SEE ALSO"
 \fBcd(1)\fR
