@@ -35,8 +35,8 @@ jobs:
              sudo apt-get install fish
          -  name: Test WarpDrive
             run: |
-               curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/install.fish | fish
-               wd -s / ; wd ; wd --update; wd --help;
+               fish $GITHUB_WORKSPACE/fish/install.fish
+               fish $GITHUB_WORKSPACE/fish/test.fish
             shell: fish {0}
    macos-test:
       # The type of runner that the job will run on
@@ -51,17 +51,12 @@ jobs:
             with:
                # The Java version to make available on the path. Takes a whole or semver Java version, or 1.x syntax (e.g. 1.8 => Java 8.x). Early access versions can be specified in the form of e.g. 14-ea, 14.0.0-ea, or 14.0.0-ea.28
                java-version: 14
-
-         # Runs a set of commands using the runners shell
          -  name: Get Fish
             run: |
                brew install fish
-         #    sudo apt-add-repository ppa:fish-shell/release-3
-         #    sudo apt-get update
-         #    sudo apt-get install fish
          -  name: Test WarpDrive
             run: |
-               curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/install.fish | fish
-               wd -s / ; wd ; wd --update; wd --help;
+               fish $GITHUB_WORKSPACE/fish/install.fish
+               fish $GITHUB_WORKSPACE/fish/test.fish
             shell: fish {0}
           
