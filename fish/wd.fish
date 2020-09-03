@@ -4,7 +4,7 @@ function wd --description 'Warp across directories'
   end
   if test "$argv[1]" = "--update"
     set_color bryellow; echo "Updating WarpDrive"; set_color normal;
-    curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/install.fish | fish
+    curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/install.fish | fish
   else
       if test "$argv[1]" = "-s"
           set wd_cd_to (java -cp $wd_source_containing_dir WarpDrive $argv[2..-1])

@@ -163,7 +163,7 @@ Adding this:
 somewhere in your `fish_prompt` function and running this command in a `fish` shell:
 
 ```fish
-curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/install.fish | fish
+curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/install.fish | fish
 ```
 
 ## Compatibility
