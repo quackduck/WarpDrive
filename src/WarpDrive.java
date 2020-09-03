@@ -25,26 +25,37 @@ public class WarpDrive {
 
         if (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h")) {
             String n = System.lineSeparator();
-            System.err.println("WarpDrive - Warp across directories" + n + "Usage: wd [<option>] [<pattern> ...] " + n
-                    + "Options:" + n + "   -s                              Run ls after warping to a directory" + n
-                    + "   --add, -a <path> ...            Add paths to be tracked. Paths are automatically added when visited"
-                    + n + "   --remove, -r <path> ...   Remove paths so they are no longer tracked" + n
-                    + "   --list, -l                List tracked paths and their points, sorted by most" + n
-                    + "   --update                        Update WarpDrive to the latest commit" + n
-                    + "   --help, -h                      Print this help message" + n + "Examples:" + n + "   wd" + n
-                    + "   wd /" + n + "   wd dir-in-pwd" + n + "   wd dir-that-was-visited-before" + n
-                    + "   wd grand-parent-dir parent-dir child-dir" + n + "   wd parent-dir grand-parent-dir child-dir"
-                    + n + "   wd a-part-of-the-full-name-of-some-dir" + n + "   wd /absolute/path/to/somewhere" + n
-                    + "   wd -s run-ls-after-warping" + n + "   wd --add dir-to-add" + n
-                    + "   wd --remove dir-to-remove" + n + "   wd --list" + n + "   wd --update" + n + "   wd --help"
-                    + n + "Note:" + n
-                    + "   To go to the home directory don't specify any arguments, i.e. use just `wd` (like cd)" + n
-                    + "   When specifying multiple patterns, order doesn't matter except for the last pattern given" + n
-                    + "      i.e. WarpDrive will always take you to a directory whose name matches the last pattern" + n
-                    + "   If <pattern> is specified after an option, <pattern> will be ignored unless the option is -s"
-                    + n
-                    + "   -s is accepted silently even if you use any other option (this is so that you can make an alias with -s)"
-                    + n + n + "Refer to https://github.com/quackduck/WarpDrive for more information");
+            System.err.println("WarpDrive - Warp across directories" + n +
+                    "Usage: wd [<option>] [<pattern> ...] " + n +
+                    "Options:" + n +
+                    "   -s                              Run ls after warping to a directory" + n +
+                    "   --add, -a <path> ...            Add paths to be tracked. Paths are automatically added when visited" + n +
+                    "   --remove, -r <path> ...   Remove paths so they are no longer tracked" + n +
+                    "   --list, -l                List tracked paths and their points, sorted by most" + n +
+                    "   --update                        Update WarpDrive to the latest commit" + n +
+                    "   --help, -h                      Print this help message" + n +
+                    "Examples:" + n +
+                    "   wd" + n +
+                    "   wd /" + n +
+                    "   wd dir-in-pwd" + n +
+                    "   wd dir-that-was-visited-before" + n +
+                    "   wd grand-parent-dir parent-dir child-dir" + n +
+                    "   wd parent-dir grand-parent-dir child-dir" + n +
+                    "   wd a-part-of-the-full-name-of-some-dir" + n +
+                    "   wd /absolute/path/to/somewhere" + n +
+                    "   wd -s run-ls-after-warping" + n +
+                    "   wd --add dir-to-add" + n +
+                    "   wd --remove dir-to-remove" + n +
+                    "   wd --list" + n +
+                    "   wd --update" + n +
+                    "   wd --help" + n +
+                    "Note:" + n +
+                    "   To go to the home directory don't specify any arguments, i.e. use just `wd` (like cd)" + n +
+                    "   When specifying multiple patterns, order doesn't matter except for the last pattern given" + n +
+                    "      i.e. WarpDrive will always take you to a directory whose name matches the last pattern" + n +
+                    "   If <pattern> is specified after an option, <pattern> will be ignored unless the option is -s" + n +
+                    "   -s is accepted silently even if you use any other option (this is so that you can make an alias with -s)" + n + n +
+                    "Refer to https://github.com/quackduck/WarpDrive for more information");
             System.out.println(".");
             return;
         }
