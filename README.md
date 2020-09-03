@@ -89,14 +89,14 @@ Adds paths. Paths are automatically added when you visit them.
 wd --add /Users /usr/local/bin
 ```
 
- **Option -r, --rm or --remove**
+ **Option -r or --remove**
 
 Removes paths. This does not "decrement" frequency. It completely deletes a path, so it is no longer tracked (Unless, of course, you visit it again).
 
 ```sh
 wd --remove /Users /usr/local/bin
 ```
-**Option -l, --ls or --list**
+**Option -l or --list**
 
 Shows tracked directories and their points, sorted by most.
 ```sh
