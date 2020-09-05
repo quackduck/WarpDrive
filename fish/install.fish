@@ -13,8 +13,10 @@ cd $wd_source_containing_dir && javac WarpDrive.java && rm WarpDrive.java && cd 
 if test (uname) = "Darwin"
   mkdir -p /usr/local/share/man/man1
   curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/man/man1/wd.1 > /usr/local/share/man/man1/wd.1 # downloads man page
+  curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/completion/wd.fish > /usr/local/share/fish/vendor_completions.d/wd.fish
 else
-  echo "Your password is needed to install the man page for WarpDrive"
+  echo "Your password is needed to install the man page and fish completions for WarpDrive"
   sudo mkdir -p /usr/local/share/man/man1
-  curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/man/man1/wd.1 | sudo tee /usr/local/share/man/man1/wd.1 > /dev/null # downloads man page
+  curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/man/man1/wd.1 | sudo tee /usr/local/share/man/man1/wd.1 > /dev/null # downloads man page with sudo
+  curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/completion/wd.fish | sudo tee /usr/local/share/fish/vendor_completions.d/wd.fish > /dev/null # downloads man page with sudo
 end
