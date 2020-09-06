@@ -1,4 +1,4 @@
-function fish_prompt --description 'Ishans prompt'
+function fish_prompt --description 'example prompt'
 
     if test ! "$wd_last_added_dir"
       set -g wd_last_added_dir (pwd)
@@ -20,6 +20,6 @@ function fish_prompt --description 'Ishans prompt'
       echo
     end
     set_color brgreen
-    echo -n "|>  "
+    echo -n ">  "
     set_color normal
 end

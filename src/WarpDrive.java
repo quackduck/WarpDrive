@@ -10,9 +10,9 @@ import java.util.*;
  */
 public class WarpDrive {
 
-    // TODO: Think about what to do now haha
+    // TODO: Bash support
 
-    private static final File data = new File(System.getProperty("user.home") + "/.WarpDriveData");
+    private static final File data = new File(System.getProperty("user.home") + "/.WarpDrive/WarpDriveData.txt");
     private static final ArrayList<String> lines = new ArrayList<>();
     private static boolean dataFileRead = false;
     private static boolean debug = false;
@@ -28,12 +28,12 @@ public class WarpDrive {
             System.err.println("WarpDrive - Warp across directories" + n +
                     "Usage: wd [<option>] [<pattern> ...] " + n +
                     "Options:" + n +
-                    "   -s                              Run ls after warping to a directory" + n +
-                    "   --add, -a <path> ...            Add paths to be tracked. Paths are automatically added when visited" + n +
-                    "   --remove, -r <path> ...   Remove paths so they are no longer tracked" + n +
-                    "   --list, -l                List tracked paths and their points, sorted by most" + n +
-                    "   --update                        Update WarpDrive to the latest commit" + n +
-                    "   --help, -h                      Print this help message" + n +
+                    "   -s                         Run ls after warping to a directory" + n +
+                    "   --add, -a <path> ...       Add paths to be tracked. Paths are automatically added when visited" + n +
+                    "   --remove, -r <path> ...    Remove paths so they are no longer tracked" + n +
+                    "   --list, -l                 List tracked paths and their points, sorted by most" + n +
+                    "   --update                   Update WarpDrive to the latest commit" + n +
+                    "   --help, -h                 Print this help message" + n +
                     "Examples:" + n +
                     "   wd" + n +
                     "   wd /" + n +
@@ -130,7 +130,7 @@ public class WarpDrive {
             }
             writeToDataFile();
         } catch (Exception e) {
-            System.err.println("Error while trying to read or write to datafile(~/.WarpDriveData)");
+            System.err.println("Error while trying to read or write to datafile (~/.WarpDrive/WarpDriveData.txt)");
             if (debug) {
                 e.printStackTrace();
             }
@@ -242,7 +242,7 @@ public class WarpDrive {
             }
             writeToDataFile();
         } catch (Exception e) {
-            System.err.println("Error while trying to read or write to datafile(~/.WarpDriveData)");
+            System.err.println("Error while trying to read or write to datafile (~/.WarpDrive/WarpDriveData.txt)");
             if (debug) {
                 e.printStackTrace();
             }
@@ -262,6 +262,7 @@ public class WarpDrive {
         if (!data.exists()) {
             try {
                 // noinspection ResultOfMethodCallIgnored
+                data.getParentFile().mkdirs();
                 data.createNewFile();
             } catch (IOException e) {
                 System.err.println("Couldn't make the datafile");

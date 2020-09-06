@@ -177,7 +177,7 @@ This is because the JVM takes a lot of time to start up. The application itself 
  
  ## Caveats
  
-  _WarpDrive stores data at_ `~/.WarpDriveData`.
+  _WarpDrive stores data at_ `~/.WarpDrive/WarpDriveData.txt`.
  
  _WarpDrive will always take you to a directory that matches the last pattern given._ In other words, if the datafile contains two directories: `/foo/bar` and `/bar/foo` and you use the command `wd f` it will take you to `/bar/foo`.
  
