@@ -23,7 +23,7 @@ You could also do the same thing with just parts of the full path:
  ### Options 
  Currently, WarpDrive has six options:
  
- **Option -s**
+ **Option --ls or -s**
  
  Runs `ls` after warping to a directory.
  ```
@@ -152,13 +152,7 @@ Points	Directory
 Adding this:
  
  ```fish
- if test ! "$wd_last_added_dir"
-    set -g wd_last_added_dir (pwd)
- end
- if test "$wd_last_added_dir" != (pwd) -a (pwd) != "$HOME"
-    wd --add (pwd)
- end
- set -g wd_last_added_dir (pwd)
+wd --prompt
  ```
 somewhere in your `fish_prompt` function and running this command in a `fish` shell:
 
@@ -181,7 +175,7 @@ This is because the JVM takes a lot of time to start up. The application itself 
  
  _WarpDrive will always take you to a directory that matches the last pattern given._ In other words, if the datafile contains two directories: `/foo/bar` and `/bar/foo` and you use the command `wd f` it will take you to `/bar/foo`.
  
- _WarpDrive is case-sensitive. `wd Bar` is not the same as `wd bar`._
+ _WarpDrive is not case sensitive. `wd Bar` is the same as `wd bar`._
 
 _Just `wd` takes you to the home directory._
 
