@@ -147,14 +147,7 @@ Points	Directory
  
  ### Fish Install
  
- WarpDrive can be installed by:
- 
-Adding this:
- 
- ```fish
-wd --prompt
- ```
-somewhere in your `fish_prompt` function and running this command in a `fish` shell:
+WarpDrive can be installed by running this command:
 
 ```fish
 curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/install.fish | fish

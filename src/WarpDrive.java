@@ -1,13 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-/**
- * This is a work in progress MacOS will be supported first. Inspired by rupa/z,
- * autojump, zsh-z, and z.lua. Moving to fish meant I couldn't use rupa/z
- * anymore.(Edit: there is actually a fish z from jethrokuan/z. I will still
- * continue to work on this) I had to install lua just so I could use a program
- * similar to rupa/z
- */
 public class WarpDrive {
 
     // TODO: Bash support

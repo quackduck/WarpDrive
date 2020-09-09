@@ -1,10 +1,9 @@
 if test ! "$wd_source_containing_dir"
     set wd_source_containing_dir ~/.WarpDrive
 end
+mkdir -p ~/.config/fish/conf.d/
+curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/wd_on_prompt.fish > ~/.config/fish/conf.d/wd_on_prompt.fish
 mkdir -p ~/.config/fish/functions
-if test ! -e ~/.config/fish/functions/fish_prompt.fish
-  curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/example_fish_prompt.fish > ~/.config/fish/functions/fish_prompt.fish # downloads the newest fish function file
-end
 curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/wd.fish > ~/.config/fish/functions/wd.fish # downloads the newest fish function file
 mkdir -p $wd_source_containing_dir
 curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/src/WarpDrive.java > "$wd_source_containing_dir"/WarpDrive.java # downloads the newest java source code file
