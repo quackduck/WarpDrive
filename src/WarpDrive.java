@@ -14,8 +14,13 @@ public class WarpDrive {
 
     private static final File data = new File(System.getProperty("user.home") + "/.WarpDrive/WarpDriveData.txt");
     private static final ArrayList<String> lines = new ArrayList<>();
+    private static final ArrayList<ArrayList<String>> linesWithPoints = new ArrayList<>();
     private static boolean dataFileRead = false;
-    private static boolean debug = false;
+    private static Comparator<ArrayList<String>> sortByPoints = (o1, o2) -> {
+        double firstRank = Double.parseDouble(o1.get(3));
+        double secondRank = Double.parseDouble(o2.get(3));
+        return Double.compare(secondRank, firstRank);
+    };
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -23,12 +28,12 @@ public class WarpDrive {
             System.exit(0);
         }
 
-        if (args[0].equalsIgnoreCase("--help") || args[0].equalsIgnoreCase("-h")) {
+        if (args[0].equals("--help") || args[0].equals("-h")) {
             String n = System.lineSeparator();
             System.err.println("WarpDrive - Warp across directories" + n +
                     "Usage: wd [<option>] [<pattern> ...] " + n +
                     "Options:" + n +
-                    "   -s                         Run ls after warping to a directory" + n +
+                    "   --ls, -s                   Run ls after warping to a directory" + n +
                     "   --add, -a <path> ...       Add paths to be tracked. Paths are automatically added when visited" + n +
                     "   --remove, -r <path> ...    Remove paths so they are no longer tracked" + n +
                     "   --list, -l                 List tracked paths and their points, sorted by most" + n +
@@ -60,7 +65,7 @@ public class WarpDrive {
             return;
         }
 
-        if (args[0].equalsIgnoreCase("--add") || args[0].equalsIgnoreCase("-a")) {
+        if (args[0].equals("--add") || args[0].equals("-a")) {
             if (args.length == 1) {
                 System.err.println("No argument for option: --add");
                 System.out.println("."); // cd .
@@ -74,7 +79,7 @@ public class WarpDrive {
             return;
         }
 
-        if (args[0].equalsIgnoreCase("--remove") || args[0].equalsIgnoreCase("-r")) {
+        if (args[0].equals("--remove") || args[0].equals("-r")) {
             if (args.length == 1) {
                 System.err.println("No argument for option: --remove");
                 System.out.println("."); // cd .
@@ -88,7 +93,7 @@ public class WarpDrive {
             return;
         }
 
-        if (args[0].equalsIgnoreCase("--list") || args[0].equalsIgnoreCase("-l")) {
+        if (args[0].equals("--list") || args[0].equals("-l")) {
             printDirsAndPoints();
             System.out.println("."); // cd .
             // System.err.println(System.currentTimeMillis());
@@ -104,70 +109,27 @@ public class WarpDrive {
         System.out.println(match); // cd <match of args[0]>
     }
 
-    public static void removePath(String path) {
-        File dir = new File(path);
-        if (!dataFileRead) {
-            readFromDataFile();
-        }
-        if (!dir.exists()) {
-            return;
-        }
-        ArrayList<String> parsed = new ArrayList<>();
-        try {
-            path = dir.getCanonicalPath();
-            String line;
-            for (int i = 0, linesSize = lines.size(); i < linesSize; i++) {
-                parsed.clear();
-                line = lines.get(i);
-                if (line.contains(path)) {
-                    parseDataline(parsed, line);
-                    if (parsed.get(0).length() != path.length()) {
-                        continue;
-                    }
-                    lines.remove(i);
-                    break;
-                }
-            }
-            writeToDataFile();
-        } catch (Exception e) {
-            System.err.println("Error while trying to read or write to datafile (~/.WarpDrive/WarpDriveData.txt)");
-            if (debug) {
-                e.printStackTrace();
-            }
-            System.exit(2);
-        }
-
-    }
-
     public static void printDirsAndPoints() {
         readFromDataFile();
-        ArrayList<String> parsedDataline = new ArrayList<>();
-        lines.sort((o1, o2) -> {
-            double firstRank = points(o1);
-            double secondRank = points(o2);
-            return Double.compare(secondRank, firstRank);
-        });
+        linesWithPoints.sort(sortByPoints);
         System.err.println("Points\tDirectory");
-        for (String line : lines) {
-            parseDataline(parsedDataline, line);
-            System.err.println(points(line) + "\t" + parsedDataline.get(0));
+        for (ArrayList<String> parsedDataline : linesWithPoints) {
+            System.err.println(parsedDataline.get(3) + "\t" + parsedDataline.get(0));
         }
         writeToDataFile();
     }
 
     public static String matchPattern(String pattern) {
-        ArrayList<String> finalists = new ArrayList<>();
+        ArrayList<ArrayList<String>> finalists = new ArrayList<>();
         pattern = pattern.trim();
         String[] parsedPattern = pattern.split(" ");
         int hits;
         if (!dataFileRead) {
             readFromDataFile();
         }
-        ArrayList<String> parsedDataline = new ArrayList<>();
         String candidatePath;
-        for (String dataline : lines) {
+        for (ArrayList<String> parsedDataline : linesWithPoints) {
             hits = 0;
-            parseDataline(parsedDataline, dataline);
             candidatePath = parsedDataline.get(0);
             for (int i = 0; i < parsedPattern.length; i++) {
                 if (i == parsedPattern.length - 1) {
@@ -176,25 +138,21 @@ public class WarpDrive {
                         parsedCandidatePath = new String[1];
                     }
                     parsedCandidatePath[0] = "/";
-                    if (parsedCandidatePath[parsedCandidatePath.length - 1]
-                            .contains(parsedPattern[parsedPattern.length - 1])) {
+                    if (parsedCandidatePath[parsedCandidatePath.length - 1].toLowerCase()
+                            .contains(parsedPattern[parsedPattern.length - 1].toLowerCase())) {
                         hits++;
                     }
-                } else if (candidatePath.contains(parsedPattern[i])) {
+                } else if (candidatePath.toLowerCase().contains(parsedPattern[i].toLowerCase())) {
                     hits++;
                 }
             }
             if (hits == parsedPattern.length) {
-                finalists.add(dataline);
+                finalists.add(parsedDataline);
             }
         }
         if (finalists.size() >= 1) {
-            finalists.sort((o1, o2) -> {
-                double firstRank = points(o1);
-                double secondRank = points(o2);
-                return (int) (secondRank - firstRank);
-            });
-            return parseDataline(finalists.get(0), 0);
+            finalists.sort(sortByPoints);
+            return finalists.get(0).get(0);
         }
         return pattern;
     }
@@ -216,42 +174,60 @@ public class WarpDrive {
         }
         try {
             path = dir.getCanonicalPath();
-            ArrayList<String> parsed = new ArrayList<>();
             boolean dirWasFound = false;
             String line;
-            for (int i = 0, linesSize = lines.size(); i < linesSize; i++) {
-                parsed.clear();
-                line = lines.get(i);
-                if (line.contains(path)) {
-                    parseDataline(parsed, line);
-                    if (parsed.get(0).length() != path.length()) {
-                        continue;
-                    }
-                    parsed.add(1, Integer.toString(Integer.parseInt(parsed.get(1)) + 1));
-                    parsed.remove(2);
-                    line = parsed.get(0) + "|" + parsed.get(1) + "|"
-                            + Math.round((double) System.currentTimeMillis() / 1000.0);
+            for (int i = 0, linesSize = linesWithPoints.size(); i < linesSize; i++) {
+                if (linesWithPoints.get(i).get(0).equals(path)) {
                     dirWasFound = true;
-                    lines.remove(i);
-                    lines.add(i, line);
+                    linesWithPoints.get(i).set(1, String.valueOf(Integer.parseInt(linesWithPoints.get(i).get(1)) + 1));
+                    linesWithPoints.get(i).set(2, String.valueOf(Math.round((double) System.currentTimeMillis() / 1000.0)));
+                    linesWithPoints.get(i).set(3, String.valueOf(points(linesWithPoints.get(i))));
                     break;
                 }
             }
             if (!dirWasFound) {
-                lines.add(dir.getCanonicalPath() + "|1|" + Math.round((double) System.currentTimeMillis() / 1000.0));
+                ArrayList<String> newLine = new ArrayList<>();
+                newLine.add(path);
+                newLine.add("1");
+                newLine.add(String.valueOf(Math.round((double) System.currentTimeMillis() / 1000.0)));
+                newLine.add(String.valueOf(points(newLine)));
+                linesWithPoints.add(newLine);
             }
             writeToDataFile();
         } catch (Exception e) {
-            System.err.println("Error while trying to read or write to datafile (~/.WarpDrive/WarpDriveData.txt)");
-            if (debug) {
-                e.printStackTrace();
-            }
+            System.err.println("Error while trying to add a path (This has probably happened because of bad code @quackduck wrote)");
+            e.printStackTrace();
             System.exit(2);
         }
 
     }
 
-    public static boolean pathExists(String path) {
+    public static void removePath(String path) {
+        File dir = new File(path);
+        if (!dataFileRead) {
+            readFromDataFile();
+        }
+        if (!dir.exists()) {
+            return;
+        }
+        try {
+            path = dir.getCanonicalPath();
+            for (int i = 0, linesSize = linesWithPoints.size(); i < linesSize; i++) {
+                if (linesWithPoints.get(i).get(0).equalsIgnoreCase(path)) {
+                    linesWithPoints.remove(i);
+                    break;
+                }
+            }
+            writeToDataFile();
+        } catch (Exception e) {
+            System.err.println("Error while trying to remove a path (This has probably happened because of bad code @quackduck wrote)");
+            e.printStackTrace();
+            System.exit(2);
+        }
+
+    }
+
+    private static boolean pathExists(String path) {
         return new File(path).isDirectory();
     }
 
@@ -279,16 +255,17 @@ public class WarpDrive {
             while ((line = br.readLine()) != null) {
                 line = line.trim();
                 if (!line.isBlank() && pathExists(parseDataline(line, 0))) {
-                    lines.add(line);
+                    ArrayList<String> parsedLine = new ArrayList<>();
+                    parseDataline(parsedLine, line);
+                    parsedLine.add(Double.toString(points(line)));
+                    linesWithPoints.add(parsedLine);
                 }
             }
             fr.close();
             br.close();
         } catch (IOException e) {
             System.err.println("Could not read from datafile or close resources attached");
-            if (debug) {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
             System.exit(4);
         }
         dataFileRead = true;
@@ -298,16 +275,14 @@ public class WarpDrive {
         try {
             FileWriter fw = new FileWriter(data);
             BufferedWriter out = new BufferedWriter(fw);
-            for (String s : lines) {
-                out.write(s + System.lineSeparator());
+            for (ArrayList<String> parsed : linesWithPoints) {
+                out.write(unParseDataline(parsed) + System.lineSeparator());
             }
             out.flush();
             out.close();
         } catch (IOException e) {
             System.err.println("Could not write to datafile or close resources attached");
-            if (debug) {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
             System.exit(4);
         }
 
@@ -335,9 +310,17 @@ public class WarpDrive {
         return parseDataline(line).get(i);
     }
 
+    private static String unParseDataline(ArrayList<String> parsed) {
+        return parsed.get(0) + "|" + parsed.get(1) + "|" + parsed.get(2);
+    }
+
     private static double points(String dataline) {
         ArrayList<String> parsed = new ArrayList<>();
         parseDataline(parsed, dataline);
+        return points(parsed);
+    }
+
+    private static double points(ArrayList<String> parsed) {
         int frequency = Integer.parseInt(parsed.get(1));
         int time = (int) (Math.round((double) System.currentTimeMillis() / (double) 1000)
                 - Long.parseLong(parsed.get(2)));
@@ -352,10 +335,12 @@ public class WarpDrive {
             result = frequency * 2;
         } else if (time <= (3600 * 24) * 7) { // last week
             result = frequency;
-        } else if (time <= (3600 * 24) * 7 * 2) {
+        } else if (time <= (3600 * 24) * 7 * 2) { // last fortnight
             result = frequency * 0.5;
-        } else {
+        } else if (time <= (3600 * 24) * 7 * 4 * 2) { //approx last two months
             result = frequency * 0.25;
+        } else {
+            result = 0;
         }
         return (double) Math.round(result * 100) / (double) 100;
     }
