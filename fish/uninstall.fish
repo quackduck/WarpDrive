@@ -1,3 +1,4 @@
+echo "Uninstalling WarpDrive fully. Goodbye!"
 if test ! "$wd_source_containing_dir"
     set wd_source_containing_dir ~/.WarpDrive
 end

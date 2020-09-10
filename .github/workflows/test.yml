@@ -37,6 +37,7 @@ jobs:
             run: |
                fish $GITHUB_WORKSPACE/fish/install.fish
                fish $GITHUB_WORKSPACE/fish/test.fish
+               fish $GITHUB_WORKSPACE/fish/uninstall.fish
             shell: fish {0}
    macos-test:
       # The type of runner that the job will run on
@@ -58,5 +59,6 @@ jobs:
             run: |
                fish $GITHUB_WORKSPACE/fish/install.fish
                fish $GITHUB_WORKSPACE/fish/test.fish
+               fish $GITHUB_WORKSPACE/fish/uninstall.fish
             shell: fish {0}
           
