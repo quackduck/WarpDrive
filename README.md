@@ -139,18 +139,24 @@ Points	Directory
  
  **Note! WarpDrive will *always* take you to a directory matching the last pattern. For more info on what this means, check the second Caveat.**
  
- ## Installing
+ ## Installing or Uninstalling
  
  `fish` is currently supported.
  
  You need to have `java` installed for WarpDrive to work. Use `brew cask install java` if you have Homebrew installed
  
- ### Fish Install
+ ### Fish Install or Uninstall
  
 WarpDrive can be installed by running this command:
 
 ```fish
 curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/install.fish | fish
+```
+
+and uninstalled by running this command:
+
+```fish
+curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/uninstall.fish | fish
 ```
 
 ## Compatibility

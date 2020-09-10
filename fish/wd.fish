@@ -10,7 +10,7 @@ function wd --description 'Warp across directories'
     return
   end
 
-  if test "x$argv[1]" = "x-s" -o "x$argv[1]" = "x--ls"
+  if test "\"$argv[1]\"" = "\"-s\"" -o "\"$argv[1]\"" = "\"--ls\""
       set wd_cd_to (java -cp $wd_source_containing_dir WarpDrive $argv[2..-1])
       cd $wd_cd_to
     if test "$status" != "0"
