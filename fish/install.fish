@@ -3,6 +3,7 @@ curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/wd_on
 mkdir -p ~/.config/fish/functions
 curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/wd.fish > ~/.config/fish/functions/wd.fish # downloads the newest fish function file
 mkdir -p ~/.WarpDrive
+curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/version.txt > ~/.WarpDrive/version.txt
 curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/src/WarpDrive.java > ~/.WarpDrive/WarpDrive.java # downloads the newest java source code file
 cd ~/.WarpDrive && javac WarpDrive.java && rm WarpDrive.java && cd - # compiles the java file and then deletes it
 
