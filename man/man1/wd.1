@@ -16,7 +16,9 @@ i.e. WarpDrive will always take you to a directory whose name matches the last p
 .sp 0
 If <pattern> is specified after an option, <pattern> will be ignored unless the option is \-s
 .sp 0
-Option \-s is accepted silently even if you use any other option (this is so that you can make an alias with \-s)
+No options can be combined (you can't use any two options at the same time)
+.sp 0
+Any output seen is on stderr
 .SH OPTIONS
 .TP
 \fB\-\-ls\fR, \fB\-s\fR
@@ -36,12 +38,15 @@ Update WarpDrive to the latest commit
 .TP
 \fB\-\-help\fR, \fB\-h\fR
 Print a small help message
-
+.TP
+\fB\-\-version\fR, \fB\-v\fR
+Prints the version of WarpDrive you have
+.TP
+\fB\-\-check\fR, \fB\-c\fR
+Checks if a newer version is available
 .SH EXAMPLES
 .sp 0
 wd
-.sp 0
-wd /
 .sp 0
 wd dir-in-pwd
 .sp 0
@@ -60,12 +65,6 @@ wd \-s ls-after-warping
 wd \-\-add dir-to-add
 .sp 0
 wd \-\-remove dir-to-remove
-.sp 0
-wd \-\-list
-.sp 0
-wd \-\-update
-.sp 0
-wd \-\-help
 .SH "SEE ALSO"
 \fBcd(1)\fR
 .P

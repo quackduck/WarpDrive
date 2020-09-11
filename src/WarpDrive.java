@@ -1,5 +1,7 @@
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class WarpDrive {
 
@@ -8,12 +10,12 @@ public class WarpDrive {
     private static final File data = new File(System.getProperty("user.home") + "/.WarpDrive/WarpDriveData.txt");
     private static final ArrayList<String> lines = new ArrayList<>();
     private static final ArrayList<ArrayList<String>> linesWithPoints = new ArrayList<>();
-    private static boolean dataFileRead = false;
-    private static Comparator<ArrayList<String>> sortByPoints = (o1, o2) -> {
+    private static final Comparator<ArrayList<String>> sortByPointsDescending = (o1, o2) -> {
         double firstRank = Double.parseDouble(o1.get(3));
         double secondRank = Double.parseDouble(o2.get(3));
         return Double.compare(secondRank, firstRank);
     };
+    private static boolean dataFileRead = false;
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -32,27 +34,27 @@ public class WarpDrive {
                     "   --list, -l                 List tracked paths and their points, sorted by most" + n +
                     "   --update                   Update WarpDrive to the latest commit" + n +
                     "   --help, -h                 Print this help message" + n +
+                    "   --version, -v              Print the version of WarpDrive you have" +
+                    "   --check, -c                Checks if a newer version is available" + n +
                     "Examples:" + n +
                     "   wd" + n +
-                    "   wd /" + n +
                     "   wd dir-in-pwd" + n +
                     "   wd dir-that-was-visited-before" + n +
                     "   wd grand-parent-dir parent-dir child-dir" + n +
                     "   wd parent-dir grand-parent-dir child-dir" + n +
-                    "   wd a-part-of-the-full-name-of-some-dir" + n +
+                    "   wd a-part-of-the-name-of-some-dir" + n +
                     "   wd /absolute/path/to/somewhere" + n +
                     "   wd -s run-ls-after-warping" + n +
                     "   wd --add dir-to-add" + n +
                     "   wd --remove dir-to-remove" + n +
-                    "   wd --list" + n +
-                    "   wd --update" + n +
-                    "   wd --help" + n +
                     "Note:" + n +
                     "   To go to the home directory don't specify any arguments, i.e. use just `wd` (like cd)" + n +
                     "   When specifying multiple patterns, order doesn't matter except for the last pattern given" + n +
                     "      i.e. WarpDrive will always take you to a directory whose name matches the last pattern" + n +
                     "   If <pattern> is specified after an option, <pattern> will be ignored unless the option is -s" + n +
-                    "   -s is accepted silently even if you use any other option (this is so that you can make an alias with -s)" + n + n +
+                    "   No options can be combined (you can't use any two options at the same time)" + n +
+                    "   Any output seen is on stderr" + n +
+                    n +
                     "Refer to https://github.com/quackduck/WarpDrive for more information");
             System.out.println(".");
             return;
@@ -104,7 +106,7 @@ public class WarpDrive {
 
     public static void printDirsAndPoints() {
         readFromDataFile();
-        linesWithPoints.sort(sortByPoints);
+        linesWithPoints.sort(sortByPointsDescending);
         System.err.println("Points\tDirectory");
         for (ArrayList<String> parsedDataline : linesWithPoints) {
             System.err.println(parsedDataline.get(3) + "\t" + parsedDataline.get(0));
@@ -144,7 +146,7 @@ public class WarpDrive {
             }
         }
         if (finalists.size() >= 1) {
-            finalists.sort(sortByPoints);
+            finalists.sort(sortByPointsDescending);
             return finalists.get(0).get(0);
         }
         return pattern;
@@ -234,7 +236,7 @@ public class WarpDrive {
                 data.getParentFile().mkdirs();
                 data.createNewFile();
             } catch (IOException e) {
-                System.err.println("Couldn't make the datafile");
+                System.err.println("Could not create the datafile");
                 e.printStackTrace();
                 System.exit(3);
             }
@@ -251,7 +253,9 @@ public class WarpDrive {
                     ArrayList<String> parsedLine = new ArrayList<>();
                     parseDataline(parsedLine, line);
                     parsedLine.add(Double.toString(points(line)));
-                    linesWithPoints.add(parsedLine);
+                    if (Double.parseDouble(parsedLine.get(3)) > 1) {
+                        linesWithPoints.add(parsedLine);
+                    }
                 }
             }
             fr.close();

@@ -21,7 +21,7 @@ You could also do the same thing with just parts of the full path:
  wd Dir
  ```
  ### Options 
- Currently, WarpDrive has six options:
+ Currently, WarpDrive has eight options:
  
  **Option --ls or -s**
  
@@ -32,7 +32,7 @@ You could also do the same thing with just parts of the full path:
  
  **Option --help or -h**
 
-Prints a small help message (run `man wd` for more help):
+Prints a small help message:
 
 ```
  wd --help
@@ -42,33 +42,31 @@ Output:
 WarpDrive - Warp across directories
 Usage: wd [<option>] [<pattern> ...]
 Options:
-   -s                              Run ls after warping to a directory
-   --add, -a <path> ...            Add paths to be tracked. Paths are automatically added when visited
-   --remove, --rm, -r <path> ...   Remove paths so they are no longer tracked
-   --list, --ls, -l                List tracked paths and their points, sorted by most
-   --update                        Update WarpDrive to the latest commit
-   --help, -h                      Print this help message
+   --ls, -s                   Run ls after warping to a directory
+   --add, -a <path> ...       Add paths to be tracked. Paths are automatically added when visited
+   --remove, -r <path> ...    Remove paths so they are no longer tracked
+   --list, -l                 List tracked paths and their points, sorted by most
+   --update                   Update WarpDrive to the latest commit
+   --help, -h                 Print this help message
+   --version, -v              Print the version of WarpDrive you have   --check, -c                Checks if a newer version is available
 Examples:
    wd
-   wd /
    wd dir-in-pwd
    wd dir-that-was-visited-before
    wd grand-parent-dir parent-dir child-dir
    wd parent-dir grand-parent-dir child-dir
-   wd a-part-of-the-full-name-of-some-dir
+   wd a-part-of-the-name-of-some-dir
    wd /absolute/path/to/somewhere
    wd -s run-ls-after-warping
    wd --add dir-to-add
    wd --remove dir-to-remove
-   wd --list
-   wd --update
-   wd --help
 Note:
    To go to the home directory don't specify any arguments, i.e. use just `wd` (like cd)
    When specifying multiple patterns, order doesn't matter except for the last pattern given
       i.e. WarpDrive will always take you to a directory whose name matches the last pattern
    If <pattern> is specified after an option, <pattern> will be ignored unless the option is -s
-   -s is accepted silently even if you use any other option (this is so that you can make an alias with -s)
+   No options can be combined (you can't use any two options at the same time)
+   Any output seen is on stderr
 
 Refer to https://github.com/quackduck/WarpDrive for more information
 ```
@@ -120,7 +118,28 @@ Points	Directory
 0.5	/Users/ishan/Desktop
 0.5	/Users/ishan/Desktop/tests
 ```
+ **Option -c or --check**
+ Checks for newer WarpDrive versions
+```sh
+wd --check
+```
+Example output:
+```
+Newer version: WarpDrive 1.0.1 is available
+You currently have: WarpDrive 1.0.0
+Run `wd --update` to update to the latest version
+```
+ 
+ **Option -v or --version**
+Prints the version of WarpDrive you have
+```sh
+wd --version
+```
 
+Example output:
+```
+WarpDrive 1.0.0
+```
  _Even though most of these "options" would be better implemented as standalone actions, they are implemented as regular options because they have the advantage of not being like filenames_
  
  ### Different Arguments
@@ -178,7 +197,7 @@ This is because the JVM takes a lot of time to start up. The application itself 
 
 _Just `wd` takes you to the home directory._
 
-_No options except `-s` can be grouped together. `wd -hl --add /` won't work but `wd -s ~` will_
+_No options except `-s` can be grouped together. `wd -hl --add /` won't work but `wd -s /` will_
 
 _If any options except -s are specified, you stay in the same directory even if you specified a directory. `wd -l someDir` won't work_
  

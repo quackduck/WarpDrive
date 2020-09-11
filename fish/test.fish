@@ -3,5 +3,7 @@ wd
 wd --help
 wd -r /
 wd -a /
+cd /
+cd /usr
+cd
 wd -l
-wd --update
