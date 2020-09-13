@@ -6,15 +6,15 @@ function wd --description 'Warp across directories'
   end
 
   if test "\"$argv[1]\"" = "\"-v\"" -o "\"$argv[1]\"" = "\"--version\""
-    cat ~/.WarpDrive/version.txt && echo
+    echo "WarpDrive" (cat ~/.WarpDrive/version.txt)
     return
   end
 
   if test "\"$argv[1]\"" = "\"-c\"" -o "\"$argv[1]\"" = "\"--check\""
     set wd_newest_version (curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/version.txt)
     if test $wd_newest_version != (cat ~/.WarpDrive/version.txt)
-      echo "Newer version:" $wd_newest_version "is available"
-      echo "You currently have:" (cat ~/.WarpDrive/version.txt)
+      echo "Newer version: WarpDrive" $wd_newest_version "is available"
+      echo "You currently have: WarpDrive" (cat ~/.WarpDrive/version.txt)
       echo "Run `wd --update` to update to the latest version"
     else
       echo "You currently have the newest version"

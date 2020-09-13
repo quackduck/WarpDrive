@@ -1,24 +1,30 @@
-mkdir -p ~/.config/fish/conf.d/
-curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/wd_on_prompt.fish > ~/.config/fish/conf.d/wd_on_prompt.fish
-mkdir -p ~/.config/fish/functions
-curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/wd.fish > ~/.config/fish/functions/wd.fish # downloads the newest fish function file
-mkdir -p ~/.WarpDrive
-curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/version.txt > ~/.WarpDrive/version.txt
-curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/src/WarpDrive.java > ~/.WarpDrive/WarpDrive.java # downloads the newest java source code file
-cd ~/.WarpDrive && javac WarpDrive.java && rm WarpDrive.java && cd - # compiles the java file and then deletes it
 
-# Get man page
+git clone -q --depth 1 -b (curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/version.txt) https://github.com/quackduck/WarpDrive.git ~/WarpDrive; or echo "An error occurred while downloading files"; exit
+
+mkdir -p ~/.config/fish/conf.d
+mkdir -p ~/.config/fish/functions
+mkdir -p ~/.WarpDrive
+
+cp ~/WarpDrive/fish/wd_on_prompt.fish ~/.config/fish/conf.d
+cp ~/WarpDrive/fish/wd.fish ~/.config/fish/functions
+cp ~/WarpDrive/version.txt ~/.WarpDrive/version.txt
+cp ~/WarpDrive/src/WarpDrive.java ~/.WarpDrive/WarpDrive.java
+cd ~/.WarpDrive && javac WarpDrive.java && rm WarpDrive.java && cd -
+
 if test (uname) = "Darwin"
   mkdir -p /usr/local/share/man/man1
-  curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/man/man1/wd.1 > /usr/local/share/man/man1/wd.1 # downloads man page
   mkdir -p /usr/local/share/fish/vendor_completions.d
-  curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/completion/wd.fish > /usr/local/share/fish/vendor_completions.d/wd.fish
+  cp ~/WarpDrive/man/man1/wd.1 > /usr/local/share/man/man1/wd.1
+  cp ~/WarpDrive/fish/completion/wd.fish > /usr/local/share/fish/vendor_completions.d/wd.fish
 else
-echo "Your password is needed to install the man page and fish completions for WarpDrive"
-sudo fish -c "
-  mkdir -p /usr/local/share/man/man1
-  curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/man/man1/wd.1 > /usr/local/share/man/man1/wd.1 # downloads man page
-  mkdir -p /usr/local/share/fish/vendor_completions.d
-  curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/completion/wd.fish > /usr/local/share/fish/vendor_completions.d/wd.fish
-  "
+  echo "Your password is needed to install the man page and fish completions for WarpDrive"
+  sudo fish -c "
+    mkdir -p /usr/local/share/man/man1
+    mkdir -p /usr/local/share/fish/vendor_completions.d
+    cp ~/WarpDrive/man/man1/wd.1 > /usr/local/share/man/man1/wd.1 # downloads man page
+    cp ~/WarpDrive/fish/completion/wd.fish > /usr/local/share/fish/vendor_completions.d/wd.fish"
 end
+
+rm -r ~/WarpDrive
+echo "WarpDrive has been installed! Hooray! Run `wd --help` for help.
+Do let quackduck know you have WarpDrive by email at <igoel.mail@gmail.com> or by starring the repo"

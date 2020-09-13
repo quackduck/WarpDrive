@@ -23,6 +23,11 @@ public class WarpDrive {
             System.exit(0);
         }
 
+        if (args[0].equals("-")) {
+            System.out.println("-");
+            return;
+        }
+
         if (args[0].equals("--help") || args[0].equals("-h")) {
             String n = System.lineSeparator();
             System.err.println("WarpDrive - Warp across directories" + n +
@@ -34,7 +39,7 @@ public class WarpDrive {
                     "   --list, -l                 List tracked paths and their points, sorted by most" + n +
                     "   --update                   Update WarpDrive to the latest commit" + n +
                     "   --help, -h                 Print this help message" + n +
-                    "   --version, -v              Print the version of WarpDrive you have" +
+                    "   --version, -v              Print the version of WarpDrive you have" + n +
                     "   --check, -c                Checks if a newer version is available" + n +
                     "Examples:" + n +
                     "   wd" + n +
@@ -253,7 +258,7 @@ public class WarpDrive {
                     ArrayList<String> parsedLine = new ArrayList<>();
                     parseDataline(parsedLine, line);
                     parsedLine.add(Double.toString(points(line)));
-                    if (Double.parseDouble(parsedLine.get(3)) > 1) {
+                    if (Double.parseDouble(parsedLine.get(3)) >= 1) {
                         linesWithPoints.add(parsedLine);
                     }
                 }
