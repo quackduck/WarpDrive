@@ -2,8 +2,7 @@ if test -d ~/WarpDrive
   rm -r ~/WarpDrive
 end
 
-git clone -q --depth 1 -b (curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/version.txt) https://github.com/quackduck/WarpDrive.git ~/WarpDrive 2> /dev/null; or
-  echo "An error occurred while downloading files."; echo "Please report this error at https://github.com/quackduck/WarpDrive/issues"; exit
+git clone -q --depth 1 -b (curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/version.txt) https://github.com/quackduck/WarpDrive.git ~/WarpDrive 2> /dev/null; or echo "An error occurred while downloading files."; echo "Please report this error at https://github.com/quackduck/WarpDrive/issues"; exit
 
 mkdir -p ~/.config/fish/conf.d
 mkdir -p ~/.config/fish/functions
