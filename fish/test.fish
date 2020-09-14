@@ -1,9 +1,12 @@
-wd -s /
-wd
-wd --help
-wd -r /
-wd -a /
+wd -s / ; or exit
+wd ; or exit
+wd --help ; or exit
+wd -r / ; or exit
+wd -a / ; or exit
 cd /
-cd /usr
+cd /usr ; or exit
 cd
-wd -l
+wd -l ; or exit
+
+# for testing
+false ; or exit

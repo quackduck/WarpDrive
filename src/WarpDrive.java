@@ -175,12 +175,12 @@ public class WarpDrive {
         try {
             path = dir.getCanonicalPath();
             boolean dirWasFound = false;
-            String line;
             for (int i = 0, linesSize = linesWithPoints.size(); i < linesSize; i++) {
                 if (linesWithPoints.get(i).get(0).equals(path)) {
                     dirWasFound = true;
                     linesWithPoints.get(i).set(1, String.valueOf(Integer.parseInt(linesWithPoints.get(i).get(1)) + 1));
-                    linesWithPoints.get(i).set(2, String.valueOf(Math.round((double) System.currentTimeMillis() / 1000.0)));
+                    linesWithPoints.get(i).set(2,
+                            String.valueOf(Math.round((double) System.currentTimeMillis() / 1000.0)));
                     linesWithPoints.get(i).set(3, String.valueOf(points(linesWithPoints.get(i))));
                     break;
                 }
@@ -195,7 +195,8 @@ public class WarpDrive {
             }
             writeToDataFile();
         } catch (Exception e) {
-            System.err.println("Error while trying to add a path (This has probably happened because of bad code @quackduck wrote)");
+            System.err.println(
+                    "Error while trying to add a path (This has probably happened because of bad code @quackduck wrote)");
             e.printStackTrace();
             System.exit(2);
         }
@@ -220,7 +221,8 @@ public class WarpDrive {
             }
             writeToDataFile();
         } catch (Exception e) {
-            System.err.println("Error while trying to remove a path (This has probably happened because of bad code @quackduck wrote)");
+            System.err.println(
+                    "Error while trying to remove a path (This has probably happened because of bad code @quackduck wrote)");
             e.printStackTrace();
             System.exit(2);
         }
@@ -339,7 +341,7 @@ public class WarpDrive {
             result = frequency;
         } else if (time <= (3600 * 24) * 7 * 2) { // last fortnight
             result = frequency * 0.5;
-        } else if (time <= (3600 * 24) * 7 * 4 * 2) { //approx last two months
+        } else if (time <= (3600 * 24) * 7 * 4 * 2) { // approx last two months
             result = frequency * 0.25;
         } else {
             result = 0;
