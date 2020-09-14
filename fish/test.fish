@@ -7,6 +7,3 @@ cd /
 cd /usr ; or exit
 cd
 wd -l ; or exit
-
-# for testing
-false ; or exit
