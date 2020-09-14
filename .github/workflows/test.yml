@@ -35,9 +35,9 @@ jobs:
              sudo apt-get install fish
          -  name: Test WarpDrive
             run: |
-               fish $GITHUB_WORKSPACE/fish/install.fish
-               fish $GITHUB_WORKSPACE/fish/test.fish
-               fish $GITHUB_WORKSPACE/fish/uninstall.fish
+               fish $GITHUB_WORKSPACE/fish/install.fish ; or exit
+               fish $GITHUB_WORKSPACE/fish/test.fish ; or exit
+               fish $GITHUB_WORKSPACE/fish/uninstall.fish ; or exit
             shell: fish {0}
    macos-test:
       # The type of runner that the job will run on
@@ -57,8 +57,8 @@ jobs:
                brew install fish
          -  name: Test WarpDrive
             run: |
-               fish $GITHUB_WORKSPACE/fish/install.fish
-               fish $GITHUB_WORKSPACE/fish/test.fish
-               fish $GITHUB_WORKSPACE/fish/uninstall.fish
+               fish $GITHUB_WORKSPACE/fish/install.fish ; or exit
+               fish $GITHUB_WORKSPACE/fish/test.fish ; or exit
+               fish $GITHUB_WORKSPACE/fish/uninstall.fish ; or exit
             shell: fish {0}
           
