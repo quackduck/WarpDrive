@@ -169,13 +169,13 @@ WarpDrive 1.0.0
 WarpDrive can be installed by running this command:
 
 ```fish
-curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/install.fish | fish
+curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/install.fish | fish
 ```
 
 and uninstalled by running this command:
 
 ```fish
-curl https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/uninstall.fish | fish
+curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/fish/uninstall.fish | fish
 ```
 
 ## Compatibility

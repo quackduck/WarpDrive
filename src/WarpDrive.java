@@ -40,7 +40,7 @@ public class WarpDrive {
                     "   --update                   Update WarpDrive to the latest commit" + n +
                     "   --help, -h                 Print this help message" + n +
                     "   --version, -v              Print the version of WarpDrive you have" + n +
-                    "   --check, -c                Checks if a newer version is available" + n +
+                    "   --check, -c                Check if a newer version is available" + n +
                     "Examples:" + n +
                     "   wd" + n +
                     "   wd dir-in-pwd" + n +
