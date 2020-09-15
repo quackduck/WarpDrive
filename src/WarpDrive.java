@@ -256,7 +256,7 @@ public class WarpDrive {
         try {
             while ((line = br.readLine()) != null) {
                 line = line.trim();
-                if (!line.isBlank() && pathExists(parseDataline(line, 0))) {
+                if (!line.trim().isEmpty() && pathExists(parseDataline(line, 0))) {
                     ArrayList<String> parsedLine = new ArrayList<>();
                     parseDataline(parsedLine, line);
                     parsedLine.add(Double.toString(points(line)));
