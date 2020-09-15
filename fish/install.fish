@@ -24,11 +24,10 @@ if test (uname) = "Darwin"
     cp ~/WarpDrive/fish/completion/wd.fish /usr/local/share/fish/vendor_completions.d/wd.fish
 else
     echo "Your password is needed to install the man page and fish completions for WarpDrive"
-    sudo fish -c "
-    mkdir -p /usr/local/share/man/man1
-    mkdir -p /usr/local/share/fish/vendor_completions.d
-    cp $HOME/WarpDrive/man/man1/wd.1 /usr/local/share/man/man1/wd.1
-    cp $HOME/WarpDrive/fish/completion/wd.fish /usr/local/share/fish/vendor_completions.d/wd.fish"
+    sudo mkdir -p /usr/local/share/man/man1
+    sudo mkdir -p /usr/local/share/fish/vendor_completions.d
+    sudo cp ~/WarpDrive/man/man1/wd.1 /usr/local/share/man/man1/wd.1
+    sudo cp ~/WarpDrive/fish/completion/wd.fish /usr/local/share/fish/vendor_completions.d/wd.fish"
 end
 
 rm -r ~/WarpDrive
