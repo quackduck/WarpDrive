@@ -27,7 +27,7 @@ else
     sudo mkdir -p /usr/local/share/man/man1
     sudo mkdir -p /usr/local/share/fish/vendor_completions.d
     sudo cp ~/WarpDrive/man/man1/wd.1 /usr/local/share/man/man1/wd.1
-    sudo cp ~/WarpDrive/fish/completion/wd.fish /usr/local/share/fish/vendor_completions.d/wd.fish"
+    sudo cp ~/WarpDrive/fish/completion/wd.fish /usr/local/share/fish/vendor_completions.d/wd.fish
 end
 
 rm -r ~/WarpDrive
