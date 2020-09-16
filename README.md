@@ -26,7 +26,7 @@ You could also do the same thing with just parts of the full path:
  **Option --ls or -s**
  
  Runs `ls` after warping to a directory.
- ```
+ ```sh
   wd --help
  ```
  
@@ -34,7 +34,7 @@ You could also do the same thing with just parts of the full path:
 
 Prints a small help message:
 
-```
+```sh
  wd --help
 ```
 Output:
@@ -75,7 +75,7 @@ Refer to https://github.com/quackduck/WarpDrive for more information
  
 Updates WarpDrive to the latest commit. It is recommended to update with `wd --update` to ensure you have the latest WarpDrive.
 
-```
+```sh
 wd --update
 ```
  
