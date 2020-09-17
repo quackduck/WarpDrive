@@ -25,17 +25,23 @@ function wd --description 'Warp across directories'
     end
 
     if test "\"$argv[1]\"" = "\"-s\"" -o "\"$argv[1]\"" = "\"--ls\""
-        set wd_cd_to (java -cp ~/.WarpDrive WarpDrive $argv[2..-1])
-        cd $wd_cd_to
-        if test "$status" != "0"
-            return 1
-        end
-        if test "$wd_cd_to" != "." -a "$wd_cd_to" != ""
+        if set output (java -cp ~/.WarpDrive WarpDrive $argv[2..-1])
+            cd $output; or return
             ls
+        else
+            for line in $output
+                echo $line
+            end
         end
         return
     end
 
-    cd (java -cp ~/.WarpDrive WarpDrive $argv)
+    if set output (java -cp ~/.WarpDrive WarpDrive $argv)
+        cd $output; or return
+    else
+        for line in $output
+            echo $line
+        end
+    end
     set -g wd_last_added_dir (pwd)
 end

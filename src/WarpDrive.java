@@ -30,7 +30,7 @@ public class WarpDrive {
 
         if (args[0].equals("--help") || args[0].equals("-h")) {
             String n = System.lineSeparator();
-            System.err.println("WarpDrive - Warp across directories" + n +
+            System.out.println("WarpDrive - Warp across directories" + n +
                     "Usage: wd [<option>] [<pattern> ...] " + n +
                     "Options:" + n +
                     "   --ls, -s                   Run ls after warping to a directory" + n +
@@ -61,43 +61,39 @@ public class WarpDrive {
                     "   Any output seen is on stderr" + n +
                     n +
                     "Refer to https://github.com/quackduck/WarpDrive for more information");
-            System.out.println(".");
+            System.exit(10);
             return;
         }
 
         if (args[0].equals("--add") || args[0].equals("-a")) {
             if (args.length == 1) {
                 System.err.println("No argument for option: --add");
-                System.out.println("."); // cd .
-                System.exit(1);
+                System.exit(10);
             }
 
             for (int j = 1; j < args.length; j++) {
                 addPath(args[j]);
             }
-            System.out.println("."); // cd .
+            System.exit(10);
             return;
         }
 
         if (args[0].equals("--remove") || args[0].equals("-r")) {
             if (args.length == 1) {
                 System.err.println("No argument for option: --remove");
-                System.out.println("."); // cd .
-                System.exit(1);
+                System.exit(10);
             }
 
             for (int j = 1; j < args.length; j++) {
                 removePath(args[j]);
             }
-            System.out.println("."); // cd .
-            return;
+            System.exit(10); // cd .
         }
 
         if (args[0].equals("--list") || args[0].equals("-l")) {
             printDirsAndPoints();
-            System.out.println("."); // cd .
+            System.exit(10);
             // System.err.println(System.currentTimeMillis());
-            return;
         }
 
         String match = "";
@@ -114,7 +110,7 @@ public class WarpDrive {
         linesWithPoints.sort(sortByPointsDescending);
         System.err.println("Points\tDirectory");
         for (ArrayList<String> parsedDataline : linesWithPoints) {
-            System.err.println(parsedDataline.get(3) + "\t" + parsedDataline.get(0));
+            System.out.println(parsedDataline.get(3) + "\t" + parsedDataline.get(0));
         }
         writeToDataFile();
     }
