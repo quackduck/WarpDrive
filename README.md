@@ -1,4 +1,7 @@
 # WarpDrive - Warp across directories
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 WarpDrive is a replacement for `cd` (However it does use `cd` to work). It tracks your visited directories and uses a "frecency" algorithm (combining frequency and recency) to determine which directory to warp to.
 
@@ -202,3 +205,22 @@ _No options except `-s` can be grouped together. `wd -hl --add /` won't work but
 _If any options except -s are specified, you stay in the same directory even if you specified a directory. `wd -l someDir` won't work_
  
  ### Suggestions are welcome, file those or issues [here](https://github.com/quackduck/WarpDrive/issues).
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://lol I don't have one"><img src="https://avatars3.githubusercontent.com/u/57476629?v=4" width="100px;" alt=""/><br /><sub><b>RiceBoi</b></sub></a><br /><a href="https://github.com/quackduck/WarpDrive/commits?author=veryniceperson" title="Tests">⚠️</a> <a href="#ideas-veryniceperson" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

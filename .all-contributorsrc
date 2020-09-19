@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "veryniceperson",
+      "name": "RiceBoi",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/57476629?v=4",
+      "profile": "http://lol I don't have one",
+      "contributions": [
+        "test",
+        "ideas"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "WarpDrive",
+  "projectOwner": "quackduck",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
