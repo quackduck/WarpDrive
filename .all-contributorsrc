@@ -14,6 +14,16 @@
         "test",
         "ideas"
       ]
+    },
+    {
+      "login": "aaryanporwal",
+      "name": "Aaryan Porwal",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/54525904?v=4",
+      "profile": "http://aaryanporwal.me",
+      "contributions": [
+        "test",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
