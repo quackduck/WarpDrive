@@ -2,11 +2,14 @@ if test -d ~/WarpDrive
     rm -r ~/WarpDrive
 end
 
-if ! git clone -q --depth 1 -b (curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/version.txt) https://github.com/quackduck/WarpDrive.git ~/WarpDrive 2>/dev/null
+set wd_latest_version (curl -sS https://raw.githubusercontent.com/quackduck/WarpDrive/master/version.txt)
+git clone -q --depth 1 -b $wd_latest_version https://github.com/quackduck/WarpDrive.git ~/WarpDrive 2>/dev/null; or \
+begin
     echo "An error occurred while downloading files."
-    echo "Please report this error at https://github.com/quackduck/WarpDrive/issues"
+    echo "Please report this at https://github.com/quackduck/WarpDrive/issues"
     exit
 end
+
 mkdir -p ~/.config/fish/conf.d
 mkdir -p ~/.config/fish/functions
 mkdir -p ~/.WarpDrive
@@ -15,7 +18,13 @@ cp ~/WarpDrive/fish/wd_on_prompt.fish ~/.config/fish/conf.d
 cp ~/WarpDrive/fish/wd.fish ~/.config/fish/functions
 cp ~/WarpDrive/version.txt ~/.WarpDrive/version.txt
 cp ~/WarpDrive/src/WarpDrive.java ~/.WarpDrive/WarpDrive.java
-cd ~/.WarpDrive && javac WarpDrive.java && rm WarpDrive.java && cd -
+cd ~/WarpDrive/src
+javac WarpDrive.java; and cp WarpDrive.class ~/.WarpDrive; or \
+begin
+    echo "An compile error occurred. Please report this at https://github.com/quackduck/WarpDrive/issues"
+    exit
+end
+cd -
 
 if test (uname) = "Darwin"
     mkdir -p /usr/local/share/man/man1

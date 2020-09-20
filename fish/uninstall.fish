@@ -1,4 +1,5 @@
-echo "Uninstalling WarpDrive fully. Goodbye! Report bugs or issues at https://github.com/quackduck/WarpDrive/issues"
+echo "Uninstalling WarpDrive. Goodbye!
+Report bugs, issues or errors at https://github.com/quackduck/WarpDrive/issues"
 rm -r ~/.config/fish/conf.d/wd_on_prompt.fish ~/.config/fish/functions/wd.fish ~/.WarpDrive
 if test (uname) = "Darwin"
     rm /usr/local/share/man/man1/wd.1 /usr/local/share/fish/vendor_completions.d/wd.fish
