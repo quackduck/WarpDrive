@@ -105,21 +105,21 @@ wd --list
 ```
 Sample output:
 ```
-Points	Directory
-150.0	/Users/ishan/Desktop/GitHub/WarpDrive
-36.0	/Users/ishan/Desktop/tests/foo
-6.0	/Users/ishan/.config/fish
-5.0	/Users/ishan/.config
-3.0	/Users/ishan/.config/fish/functions
-1.0	/usr/libexec
-1.0	/Library/Java/JavaVirtualMachines/openjdk-14.0.2.jdk/Contents/Home
-1.0	/Library/Java/JavaVirtualMachines/openjdk-14.0.2.jdk/Contents/Home/bin
-1.0	/
-1.0	/Users/ishan/Downloads
-1.0	/Users/ishan
-1.0	/Users/ishan/.config/fish/conf.d
-0.5	/Users/ishan/Desktop
-0.5	/Users/ishan/Desktop/tests
+Points   Directory
+150.0    /Users/ishan/Desktop/GitHub/WarpDrive
+36.0     /Users/ishan/Desktop/tests/foo
+6.0      /Users/ishan/.config/fish
+5.0      /Users/ishan/.config
+3.0      /Users/ishan/.config/fish/functions
+1.0      /usr/libexec
+1.0      /Library/Java/JavaVirtualMachines/openjdk-14.0.2.jdk/Contents/Home
+1.0      /Library/Java/JavaVirtualMachines/openjdk-14.0.2.jdk/Contents/Home/bin
+1.0      /
+1.0      /Users/ishan/Downloads
+1.0      /Users/ishan
+1.0      /Users/ishan/.config/fish/conf.d
+0.5      /Users/ishan/Desktop
+0.5      /Users/ishan/Desktop/tests
 ```
  **Option -c or --check**
  Checks for newer WarpDrive versions
