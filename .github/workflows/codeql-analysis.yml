@@ -42,6 +42,12 @@ jobs:
       if: ${{ github.event_name == 'pull_request' }}
 
     # Initializes the CodeQL tools for scanning.
+    - name: Setup Java JDK
+      uses: actions/setup-java@v1.4.3
+      with:
+    # The Java version to make available on the path. Takes a whole or semver Java version, or 1.x syntax (e.g. 1.8 => Java 8.x). Early access versions can be specified in the form of e.g. 14-ea, 14.0.0-ea, or 14.0.0-ea.28
+         java-version: 14
+
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
       with:
@@ -63,9 +69,10 @@ jobs:
     #    and modify them (or add more) to build your code if your project
     #    uses a compiled language
 
-    #- run: |
-    #   make bootstrap
-    #   make release
+    - run: |
+        cd src
+        javac WarpDrive.java
+        cd -
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
